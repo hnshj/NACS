@@ -1,0 +1,19 @@
+{
+  "name": "test1",
+  "version": "1.0.0",
+  "description": "this is test",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "connect": "^3.7.0",
+    "express": "^4.17.1",
+    "jquery": "^3.5.1",
+    "mongodb": "^3.6.3",
+    "socket.io": "^3.0.5"
+  }
+}

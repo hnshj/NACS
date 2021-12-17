@@ -1,0 +1,69 @@
+/*
+ * kadai.login.css
+ * ログイン画面モジュール
+ */
+
+ .kadai-login-username-title, .kadai-login-username-textbox,
+ .kadai-login-passward-title, .kadai-login-passward-textbox,
+ .kadai-login-button-ok, .kadai-login-button-cancel
+ {
+   position: absolute;
+ }
+
+.kadai-login-username-title {
+  top    : 40px;
+  left   : 20px;
+  right  : 20px;
+  font-size: 25px;
+}
+
+.kadai-login-username-textbox {
+  top    : 80px;
+  left   : 20px;
+  height : 40px;
+  width: 280px;
+  font-size: 35px;
+}
+
+.kadai-login-passward-title {
+  top    : 140px;
+  left   : 20px;
+  right  : 20px;
+  font-size: 25px;
+}
+
+.kadai-login-passward-textbox {
+  top    : 180px;
+  left   : 20px;
+  height : 40px;
+  width: 280px;
+  font-size: 35px;
+}
+
+.kadai-login-button-ok{
+  top    : 260px;
+  left   : 40px;
+  width  : 130px;
+  line-height: 40px;
+  font-size: 35px;
+  border-radius: 8px;
+  cursor: pointer;
+  background-color: #E6E6FA;
+}
+.kadai-login-button-ok:hover{
+  background-color: red;
+}
+
+.kadai-login-button-cancel{
+  top    : 260px;
+  left   : 220px;
+  width  : 130px;
+  line-height : 40px;
+  font-size: 35px;
+  border-radius: 8px;
+  cursor: pointer;
+  background-color: #E6E6FA;
+}
+.kadai-login-button-cancel:hover{
+  background-color: red;
+}

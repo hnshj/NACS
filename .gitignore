@@ -1,0 +1,6 @@
+# npm install ** でインストールされるモノたちは管理しない
+/node_modules/
+# 試験的に使うオレオレ証明書も管理しない
+# 本物の証明書も別途管理
+/private.key
+/server.pem
