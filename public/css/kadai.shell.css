@@ -13,7 +13,7 @@
   left   : 0;
   right  : 0;
   height : 40px;
-  background: #B5F5B3;
+  background: red;
 
 }
 
@@ -32,6 +32,14 @@
   cursor: pointer;
   background : green;
   }
+
+.kadai-shell-main {
+  top    : 0;
+  left   : 0;
+  bottom : 0;
+  right  : 0;
+  background : yellow;
+}
 
 .kadai-shell-head-acct:hover {
   background-color: #E63C41;

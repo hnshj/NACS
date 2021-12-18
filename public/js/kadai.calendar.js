@@ -11,38 +11,31 @@ kadai.calendar = (function () {
           + '<button class="kadai-calendar-previousWeek">前の週</button>'
           + '<button class="kadai-calendar-back">今週へ戻る</button>'
           + '<button class="kadai-calendar-nextWeek">次の週</button>'
-          + '<div class="kadai-calendar-notice"></div>'
-          + '<table class="kadai-calendar-main"></table>'
-          + '<button class="kadai-calendar-update">登録</button>',
-        tbHeader : String()
+          + '<table class="kadai-calendar-main"></table>',
+        tHeader : String()
           + '<tr><td>曜日</td>'
-          + '<td class="kadai-calendar-dotunderline">日</td>'
-          + '<td class="kadai-calendar-dotunderline">月</td>'
-          + '<td class="kadai-calendar-dotunderline">火</td>'
-          + '<td class="kadai-calendar-dotunderline">水</td>'
-          + '<td class="kadai-calendar-dotunderline">木</td>'
-          + '<td class="kadai-calendar-dotunderline">金</td>'
-          + '<td class="kadai-calendar-dotunderline">土</td></tr>',
-        tbNikka : String()
-          + '<td class="kadai-calendar-edi kadai-calendar-dotunderline">',
-        tbGyouji : String()
-          + '<td class="kadai-calendar-edimemo">',
-        settable_map : { targetYear : true,
-                         targetMonth : true,
-                         targetDay   : true},
-        targetYear  : 0,
-        targetMonth : 0,
-        targetDay   : 0
+          + '<td>日</td>'
+          + '<td>月</td>'
+          + '<td>火</td>'
+          + '<td>水</td>'
+          + '<td>木</td>'
+          + '<td>金</td>'
+          + '<td>土</td></tr>',
+        tContents : String()
+          + '<td class="kadai-calendar-edit">',
+        settable_map : { year  : true,
+                         month : true,
+                         day   : true},
+        year  : 0,
+        month : 0,
+        day   : 0
       },
       stateMap = {
-        $container : null,
-        cl         : null  // カレンダー情報
+        $container : null
       },
       jqueryMap = {},
       setJqueryMap, configModule, initModule, removeCalendar,
-      onUpdate, onPrevious, onBack, onNext, createTable,
-
-      verify, setNotice;
+      onPrevious, onBack, onNext, createTable;
 
   //---DOMメソッド---
   setJqueryMap = function () {
@@ -52,55 +45,13 @@ kadai.calendar = (function () {
       $previousWeek: $container.find( '.kadai-calendar-previousWeek' ),
       $back        : $container.find( '.kadai-calendar-back' ),
       $nextWeek    : $container.find( '.kadai-calendar-nextWeek' ),
-      $notice      : $container.find( '.kadai-calendar-notice' ),
-      $main        : $container.find( '.kadai-calendar-main' ),
-      $update      : $container.find( '.kadai-calendar-update' )
+      $main        : $container.find( '.kadai-calendar-main' )
     };
   }
 
   //---イベントハンドラ---
-  verify = function () {
-    // チェックすべき内容はないので、ユーザがOKなら良い
-    $.gevent.publish('verifyClUpdate', [{errStr:'日課、行事を入力しますか？'}]);
-  }
-
-  onUpdate = function () {
-    let i, j, weeks,
-        allData = $('.kadai-calendar-main').find('tr'),// 入力値を全て取得
-        updataArr = [],
-        nikkaPos = function ( n ) {
-          return ((3 * n) + 2);
-        },
-        gyoujiPos = function ( n ) {
-          return ((3 * n) + 3);
-        };
-
-    for (j = 0; j < 4; j++) {
-      weeks = kadai.util.getWeek(configMap.targetYear,
-                               configMap.targetMonth-1, //月だけ0始まり
-                               configMap.targetDay,
-                               j);
-      for (i = 0; i < 8; i++) {
-
-        if (i != 0) {
-          let obj;
-          //-1は最初の一列がデータでないため、ずれるから
-          obj = {year   : weeks[i-1].year,
-                 month  : weeks[i-1].month,
-                 day    : weeks[i-1].day,
-                 nikka  : allData[nikkaPos(j)].children[i].textContent,
-                 gyouji : allData[gyoujiPos(j)].children[i].textContent};
-
-          updataArr.push(obj);
-        }
-
-      }
-    }
-    kadai.model.updateCalendar(updataArr);
-  }
-
   onPrevious = function () {
-    let day = new Date(configMap.targetYear, configMap.targetMonth - 1, configMap.targetDay), obj;
+    let day = new Date(configMap.year, configMap.month - 1, configMap.day), obj;
 
     day.setDate(day.getDate() - (1*7));
 
@@ -120,7 +71,7 @@ kadai.calendar = (function () {
   }
 
   onNext = function () {
-    let day = new Date(configMap.targetYear, configMap.targetMonth - 1, configMap.targetDay), obj;
+    let day = new Date(configMap.year, configMap.month - 1, configMap.day), obj;
 
     day.setDate(day.getDate() + (1*7));
 
@@ -142,14 +93,14 @@ kadai.calendar = (function () {
             }
           };
         },
-        gyouji = []; //何度も検索するのがもったいないので、カレンダーを検索した結果を保存しておく。(1週間分)
+        kadaiContents = []; //何度も検索するのがもったいないので、カレンダーを検索した結果を保存しておく。(1週間分)
 
-    jqueryMap.$main.append(configMap.tbHeader);
+    jqueryMap.$main.append(configMap.tHeader);
 
-    for (j = 0; j < 4; j++) {
-      weeks = kadai.util.getWeek(configMap.targetYear,
-                               configMap.targetMonth-1, //月だけ0始まり
-                               configMap.targetDay,
+    for (j = 0; j < 1; j++) {
+      weeks = kadai.util.getWeek(configMap.year,
+                               configMap.month-1, //月だけ0始まり
+                               configMap.day,
                                j);
       // 曜日あたり1行目：日付
       str = '<tr>';
@@ -158,77 +109,32 @@ kadai.calendar = (function () {
           str += '<td>日付</td>';
         } else {
           str += '<td>';
-          //-1は最初の一つがA/Bでずれるから
+          //-1は最初の一つが「日付」でずれるから
           str += String(weeks[i-1].month) + '/' + String(weeks[i-1].day);
           str += '</td>';
         }
       }
       str += '</tr>';
-      // 曜日あたり2行目：日課
+      // 曜日あたり2行目：課題
       str += '<tr>';
       for (i = 0; i < 8; i++) {
         if (i == 0) {
-          str += '<td>日課</td>';
+          str += '<td>課題</td>';
         } else {
+          /* ここで課題をいれる
           str += configMap.tbNikka;
-          //-1は最初の一つがA/Bでずれるから
+          //-1は最初の一つが「課題」でずれるから
           calOneDay = stateMap.cl.find(selectfunc(weeks[i-1].year, weeks[i-1].month, weeks[i-1].day));
           if ( calOneDay != null ) {
             if ( calOneDay.nikka != null ) {
               str += calOneDay.nikka;
             }
-
-            // 3行目の準備
-            if ( calOneDay.gyouji != null ) {
-              gyouji[i] = calOneDay.gyouji
-            } else {
-              gyouji[i] = "";
-            }
-          } else {
-            gyouji[i] = "";
-          }
-          str += '</td>';
+          */
+          str += '<td>現代文完答22/論理的文章第五回</td>';
         }
       }
-      str += '</tr>';
-      // 曜日あたり3行目：行事(今は教務で入力する形だが、連絡を全教員が入力するように
-      // これは別に移したほうがよい。そしたら、ABより詳細は授業の日課とかいれるか)
-      str += '<tr>';
-      for (i =0; i < 8; i++) {
-        if (i == 0) {
-          str += '<td>行事</td>';
-        } else {
-          str += configMap.tbGyouji;
-          str += gyouji[i];
-          str += '</td>';
-        }
-      }
-      str += '</tr>';
       jqueryMap.$main.append(str);
     }
-  }
-
-  setNotice = function () {
-    // 前期、後期、それぞれで営業日を数える。
-    let zenki, kouki, i, str;
-
-    zenki = 0;
-    kouki = 0;
-    if (stateMap.cl != null) {
-      for (i = 0; i < stateMap.cl.length; i++) {
-        if (4 <= stateMap.cl[i].month && stateMap.cl[i].month <= 9) {
-          zenki++;
-        } else {
-          kouki++;
-        }
-      }
-    }
-
-    str = '前期:' + String(zenki) + '日';
-    str += '、後期:' + String(kouki) + '日';
-    str += '、合計:' + String(zenki + kouki) + '日';
-
-    jqueryMap.$notice.html(str)
   }
 
   //---パブリックメソッド---
@@ -247,7 +153,6 @@ kadai.calendar = (function () {
     setJqueryMap();
 
     createTable();
-    setNotice();
 
     // 重複して登録すると、何度もイベントが発行される。それを避けるため、一旦削除
     $(document).off('click');
@@ -293,8 +198,6 @@ kadai.calendar = (function () {
       .click( onBack );
     jqueryMap.$nextWeek
       .click( onNext );
-    jqueryMap.$update
-      .click( verify );
 
     return true;
   }
@@ -305,10 +208,8 @@ kadai.calendar = (function () {
       if ( jqueryMap.$container ) {
         jqueryMap.$previousWeek.remove();
         jqueryMap.$back.remove();
-        jqueryMap.$notice.remove();
         jqueryMap.$nextWeek.remove();
         jqueryMap.$main.remove();
-        jqueryMap.$update.remove();
       }
     }
     return true;
@@ -317,7 +218,6 @@ kadai.calendar = (function () {
   return {
     configModule  : configModule,
     initModule    : initModule,
-    removeCalendar: removeCalendar,
-    Update        : onUpdate
+    removeCalendar: removeCalendar
   };
 }());
