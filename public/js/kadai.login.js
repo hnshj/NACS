@@ -27,7 +27,8 @@ kadai.login = (function () {
       stateMap = {
       },
       jqueryMap = {},
-      setJqueryMap, configModule, initModule, onOK, onCancel;
+      setJqueryMap, configModule, initModule, removeLogin,
+      onOK, onCancel;
 
   //---DOMメソッド---
   setJqueryMap = function () {
@@ -51,9 +52,10 @@ kadai.login = (function () {
   }
 
   onCancel = function () {
-    $.gevent.publish('onCancel', [{}]);
+    $.gevent.publish('loginCancel', [{}]);
     return false;
   }
+
   //---ユーティリティメソッド---
 
   //---パブリックメソッド---
@@ -79,8 +81,24 @@ kadai.login = (function () {
     return true;
   }
 
+  removeLogin = function ( ) {
+    //初期化と状態の解除
+    if ( jqueryMap != null ) {
+      if ( jqueryMap.$container ) {
+        jqueryMap.$usernameTitle.remove();
+        jqueryMap.$usernameTextbox.remove();
+        jqueryMap.$PasswordTitle.remove();
+        jqueryMap.$PasswordTextbox.remove();
+        jqueryMap.$buttonOK.remove();
+        jqueryMap.$buttonCancel.remove();
+      }
+    }
+    return true;
+  }
+
   return {
     configModule  : configModule,
-    initModule    : initModule
+    initModule    : initModule,
+    removeLogin   : removeLogin
   };
 }());

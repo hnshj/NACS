@@ -10,12 +10,13 @@ kadai.shell = (function () {
     anchor_schema_map : {
       status : {matiuke         : true, //従属変数なし
                 login           : true, //従属変数なし
-                calendar        : true
+                calendar        : true,
+                input           : true
               },
       _status : {
-        year  : true,                  // status : calendarのとき使用
-        month : true,                  // status : calendarのとき使用
-        day   : true,                  // status : calendarのとき使用
+        year  : true,                  // status : calendar,inputのとき使用
+        month : true,                  // status : calendar,inputのとき使用
+        day   : true                   // status : calendar,inputのとき使用
       }
       // アンカーマップとして許容される型を事前に指定するためのもの。
       // 例えば、color : {red : true, blue : true}
@@ -96,8 +97,23 @@ kadai.shell = (function () {
 
     // カレンダー表示の場合
     } else if ( anchor_map.status == 'calendar' ) {
-      kadai.calendar.configModule({});
+      kadai.calendar.configModule({ year  : anchor_map._status.year,
+                                    month : anchor_map._status.month,
+                                    day   : anchor_map._status.day });
       kadai.calendar.initModule( jqueryMap.$main );
+
+    // 課題入力の場合
+    } else if ( anchor_map.status == 'input' ) {
+      kadai.input.configModule({ year  : anchor_map._status.year,
+                                 month : anchor_map._status.month,
+                                 day   : anchor_map._status.day });
+      kadai.input.initModule( jqueryMap.$main );
+
+    // ログアウトの場合
+    } else if ( anchor_map.status == 'matiuke' ) {
+      kadai.calendar.removeCalendar();
+      kadai.input.removeInput();
+      kadai.login.removeLogin();
     }
   }
 
@@ -161,6 +177,9 @@ kadai.shell = (function () {
       schema_map : configMap.anchor_schema_map
     });
 
+    // タイトルの設定
+    jqueryMap.$title.html( configMap.titleStr );
+
     // 以降、各種イベント処理の登録
     // ログインダイアログ表示
     $.gevent.subscribe( $container, 'tryLogin', function (event, msg_map) {
@@ -171,6 +190,7 @@ kadai.shell = (function () {
 
     // ログイン成功
     $.gevent.subscribe( $container, 'loginSuccess', function (event, msg_map) {
+      let today = new Date();
 
       kadai.acct.configModule({showStr : msg_map.name});
       kadai.acct.initModule( jqueryMap.$acct );
@@ -178,32 +198,63 @@ kadai.shell = (function () {
       changeAnchorPart({
         status : 'calendar',
         _status : {
-          year  : 21,
-          month : 12,
-          day   : 17
+          year  : today.getFullYear(),
+          month : today.getMonth() + 1, //月だけ0始まり
+          day   : today.getDate()
         }
       }, null, true); //ログイン前には戻したくないので、履歴を消去
     });
 
-/*
     // ログイン失敗
     $.gevent.subscribe( $container, 'loginFailure', function (event, msg_map) {
       //履歴には残さず、しれっとダイヤログを書き直してやり直しさせる。
-      skt.dialog.removeDialog();
-      skt.dialog.configModule({});
-      skt.dialog.initModule( jqueryMap.$container );
+      kadai.login.configModule({});
+      kadai.login.initModule( jqueryMap.$main );
     });
 
-    // ログアウトダイアログ表示
-    $.gevent.subscribe( $container, 'tryLogout', function (event, msg_map) {
+    // カレンダー日付変更
+    $.gevent.subscribe( $container, 'changeCalendar', function (event, msg_map) {
       changeAnchorPart({
-        status : 'dialog',
+        status : 'calendar',
         _status : {
-          dialogKind : 'logout'
+          year  : msg_map.year,
+          month : msg_map.month,
+          day   : msg_map.day
         }
       });
     });
 
+    // 課題入力
+    $.gevent.subscribe( $container, 'inputKadai', function (event, msg_map) {
+      changeAnchorPart({
+        status : 'input',
+        _status : {
+          year  : msg_map.year,
+          month : msg_map.month,
+          day   : msg_map.day
+        }
+      });
+    });
+
+    // ログアウト
+    $.gevent.subscribe( $container, 'logoutSuccess', function (event, msg_map) {
+
+      kadai.acct.configModule({showStr : 'ログインする'});
+      kadai.acct.initModule( jqueryMap.$acct );
+
+      changeAnchorPart({
+        status : 'matiuke'
+      });
+    });
+
+    // ログインキャンセル
+    $.gevent.subscribe( $container, 'loginCancel', function (event, msg_map) {
+      changeAnchorPart({
+        status : 'matiuke'
+      });
+    });
+
+/*
     // ログアウト成功
     $.gevent.subscribe( $container, 'logoutSuccess', function (event, msg_map) {
       // 設計上、これらはonHashchangeで処理すべきだが、そのためには
@@ -219,30 +270,6 @@ kadai.shell = (function () {
     // ログアウト失敗
     $.gevent.subscribe( $container, 'logoutFailure', function (event, msg_map) {
       //どうする？
-    });
-
-    // メニュー1(出席連絡(事務))選択など
-    $.gevent.subscribe( $container, 'readyAllClassComplete', function (event, msg_map) {
-
-      if ( msg_map.clientState == 'jimu' ) {
-        changeAnchorPart({
-           status : 'jimurenraku'
-        });
-      } else if ( msg_map.clientState == 'schoolTotal' ) {
-        let today = new Date();
-
-        stateMap.skYear = today.getFullYear();
-        stateMap.skMonth = today.getMonth() + 1; //月だけ0始まり
-        stateMap.skDay = today.getDate();
-
-        skt.model.readyTodayAll( msg_map.clientState ); // 準備はまだ終わらない
-                                   // readyTodayAll  が終わると　readySyukketsuResult
-                                   // がくる。
-      } else if ( msg_map.clientState == 'proxy' ) {
-        changeAnchorPart({
-          status : 'proxy'
-        });
-      }
     });
 */
     kadai.acct.configModule({showStr : 'ログインする'});

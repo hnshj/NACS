@@ -12,8 +12,9 @@ kadai.data = (function () {
   const dummyFlg = true;                      // サーバを使わない場合はこちら
 //  const dummyFlg = false , socket   = io(); // サーバを使う場合(本番)はこちら
 
-  let dummyRegisterList = [],
-      initModule, sendToServer, registerReceive;
+  let initModule, sendToServer, registerReceive,
+      dummyRegisterList = [],
+      dummyLoginFlg     = false;
 
   initModule      = function () {};
   sendToServer    = function (eventName, targetObj) {
@@ -42,6 +43,8 @@ kadai.data = (function () {
                     token    : 'this is token',
                     userKind : 100,
                     name     : "鈴木" };
+
+            dummyLoginFlg = true;
           } else {
             obj = { result   : false };
           }
@@ -50,9 +53,19 @@ kadai.data = (function () {
           break;
 
         case 'tryLogout':
+          dummyLoginFlg = false;
+
           evt = dummyRegisterList.find( selectf( 'logoutResult' ) );
-          obj = { result   : true};
+          obj = { result : true };
           setTimeout(evt.cb(obj), 200);
+          break;
+
+        case 'islogind':
+          if ( dummyLoginFlg == true ) {
+            return true;
+          } else {
+            return true;
+          }
           break;
 
         default:

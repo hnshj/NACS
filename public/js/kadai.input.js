@@ -35,7 +35,8 @@ kadai.input = (function () {
         $container : null,
       },
       jqueryMap = {},
-      setJqueryMap, configModule, initModule, onOK, onCancel;
+      setJqueryMap, configModule, initModule, removeInput,
+      onOK, onCancel;
 
   //---DOMメソッド---
   setJqueryMap = function () {
@@ -48,7 +49,8 @@ kadai.input = (function () {
       $contentsTitle   : $container.find( '.kadai-input-contents-title' ),
       $contentsTextbox : $container.find( '.kadai-input-contents-textbox' ),
       $buttonOK        : $container.find( '.kadai-input-button-ok' ),
-      $buttonCancel    : $container.find( '.kadai-input-button-cancel' )    };
+      $buttonCancel    : $container.find( '.kadai-input-button-cancel' )
+    };
   };
 
   //---イベントハンドラ---
@@ -75,7 +77,7 @@ kadai.input = (function () {
 
   initModule = function ( $container ) {
 
-    $container.html( configMap.main_html1 + configMap.showStr + configMap.main_html2 );
+    $container.html( configMap.main_html );
     stateMap.$container = $container;
     setJqueryMap();
 
@@ -87,8 +89,25 @@ kadai.input = (function () {
     return true;
   }
 
+  removeInput = function ( ) {
+    //初期化と状態の解除
+    if ( jqueryMap != null ) {
+      if ( jqueryMap.$container ) {
+        jqueryMap.$title.remove();
+        jqueryMap.$kyoukaTitle.remove();
+        jqueryMap.$kyoukaTextbox.remove();
+        jqueryMap.$contentsTitle.remove();
+        jqueryMap.$contentsTextbox.remove();
+        jqueryMap.$buttonOK.remove();
+        jqueryMap.$buttonCancel.remove();
+      }
+    }
+    return true;
+  }
+
   return {
     configModule : configModule,
-    initModule : initModule
+    initModule : initModule,
+    removeInput: removeInput
   };
 }());

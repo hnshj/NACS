@@ -36,7 +36,7 @@ kadai.acct = (function () {
       $.gevent.publish('tryLogin', [{}]);
     } else {
       console.log('longind');
-      $.gevent.publish('tryLogout', [{}]);
+      kadai.model.logout();
     }
 
     return false;
@@ -57,6 +57,10 @@ kadai.acct = (function () {
     $container.html( configMap.main_html1 + configMap.showStr + configMap.main_html2 );
     stateMap.$container = $container;
     setJqueryMap();
+
+    // 重複して登録すると、何度もイベントが発行される。それを避けるため、一旦削除
+    jqueryMap.$container
+      .off('click');
 
     jqueryMap.$container //setJqueryMap　より前に呼ぶとjqueryMapの$containerが設定されておらずエラー
       .click( onClick );

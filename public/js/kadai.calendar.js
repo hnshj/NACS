@@ -21,8 +21,8 @@ kadai.calendar = (function () {
           + '<td>木</td>'
           + '<td>金</td>'
           + '<td>土</td></tr>',
-        tContents : String()
-          + '<td class="kadai-calendar-edit">',
+        tContentClassName : String()
+          + 'kadai-calendar-edit',
         settable_map : { year  : true,
                          month : true,
                          day   : true},
@@ -58,7 +58,7 @@ kadai.calendar = (function () {
     obj = { year  : day.getFullYear(),
             month : day.getMonth() + 1, //月だけ0始まり
             day   : day.getDate()};
-    $.gevent.publish('inputNikka', [obj]);
+    $.gevent.publish('changeCalendar', [obj]);
   }
 
   onBack = function () {
@@ -67,7 +67,7 @@ kadai.calendar = (function () {
     obj = { year  : day.getFullYear(),
             month : day.getMonth() + 1, //月だけ0始まり
             day   : day.getDate()};
-    $.gevent.publish('inputNikka', [obj]);
+    $.gevent.publish('changeCalendar', [obj]);
   }
 
   onNext = function () {
@@ -78,7 +78,7 @@ kadai.calendar = (function () {
     obj = { year  : day.getFullYear(),
             month : day.getMonth() + 1, //月だけ0始まり
             day   : day.getDate()};
-    $.gevent.publish('inputNikka', [obj]);
+    $.gevent.publish('changeCalendar', [obj]);
   }
 
   //---ユーティリティメソッド---
@@ -121,7 +121,9 @@ kadai.calendar = (function () {
         if (i == 0) {
           str += '<td>課題</td>';
         } else {
-          /* ここで課題をいれる
+          // ここで課題をいれる
+          str += '<td class="' + configMap.tContentClassName + '">';
+          /*
           str += configMap.tbNikka;
           //-1は最初の一つが「課題」でずれるから
           calOneDay = stateMap.cl.find(selectfunc(weeks[i-1].year, weeks[i-1].month, weeks[i-1].day));
@@ -130,7 +132,7 @@ kadai.calendar = (function () {
               str += calOneDay.nikka;
             }
           */
-          str += '<td>現代文完答22/論理的文章第五回</td>';
+          str += '現代文完答22/論理的文章第五回</td>';
         }
       }
       jqueryMap.$main.append(str);
@@ -156,40 +158,17 @@ kadai.calendar = (function () {
 
     // 重複して登録すると、何度もイベントが発行される。それを避けるため、一旦削除
     $(document).off('click');
-    $(document).off('blur');
 
-    // 出欠または理由が選択されたらON/OFFする。
-    $(document).on('click', '.kadai-calendar-edi', function (event) {
-      let beforeVal = $(this).html();
+    // 「課題」のセルをクリックしたら、入力画面へ
+    $(document).on('click', '.' + configMap.tContentClassName, function (event) {
+      let weeks = kadai.util.getWeek(configMap.year,
+                                     configMap.month-1, //月だけ0始まり
+                                     configMap.day),
+          gyouIndex  = this.parentNode.rowIndex, // 取得方法のサンプル。未使用。
+          retusIndex = this.cellIndex;
 
-      if (beforeVal == 'A') {
-        $(this).html('B');
-      } else if (beforeVal == 'B') {
-        $(this).html("");
-      } else {
-        $(this).html('A');
-      }
-    });
-
-    // memoがクリックされたらテキストボックスを用意する
-    $(document).on('click', '.kadai-calendar-edimemo', function (event) {
-      let temp = $(this).text(),
-          more = $('.hoge').val(); // テキストボックスをさらにクリックしたときに
-                                   // 入力テキストが消える対応
-      if (more != null) {
-        temp += more;
-      }
-
-      $(this).html('<input class="hoge" type="text" value="' + temp + '">');
-
-      $('.hoge').focus();
-    });
-
-    //テキストボックスからフォーカスが外れたら入力されていた値をセルに設定する
-    $(document).on('blur', '.hoge', function () {
-
-      $('.hoge').parent().html($('.hoge').val());
-
+      // -1は左端に「課題」のセルがある分の補正
+      $.gevent.publish('inputKadai', [weeks[retusIndex-1]]);
     });
 
     jqueryMap.$previousWeek
