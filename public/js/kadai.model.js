@@ -6,14 +6,14 @@
 kadai.model = (function () {
   'use strict';
 
-  let initModule, login, logout, islogind, getAKey, putKadai, getKadai,
-      initLocal, //関数
-      accessKey, userKind, name;//モジュールスコープ変数
+  let initModule, login, logout, islogind, getAKey, putKadai, readyKadai,
+      getKadai, initLocal, //関数
+      accessKey, personalInfo, kadaiData;//モジュールスコープ変数
 
   initLocal = function () {
-    accessKey   = {};
-    userKind    = 0;
-    name        = "";
+    accessKey    = {};
+    personalInfo = {};
+    kadaiData    = [];
   }
 
   initModule = function () {
@@ -26,16 +26,16 @@ kadai.model = (function () {
 
     // ログイン処理の結果
     kadai.data.registerReceive('loginResult', function (msg) {
-      let eventName;
       // ログイン成功
       if ( msg.result == true ) {
-        accessKey = { userId : msg.userId,
-                      token  : msg.token};
-        userKind  = msg.userKind;
-        name      = msg.name;
+        accessKey    = { userId : msg.userId,
+                         token  : msg.token };
+        personalInfo = { name    : msg.name,
+                         gakunen : msg.gakunen,
+                         cls     : msg.cls };
 
         // ログイン時にみんな行うカレンダー取得
-        $.gevent.publish('loginSuccess', [{ name: name }]);
+        $.gevent.publish('loginSuccess', [{ name: personalInfo.name }]);
 
       // ログイン失敗
       } else {
@@ -59,23 +59,28 @@ kadai.model = (function () {
       $.gevent.publish(eventName, [msg]);
     });
 
-    // 日課登録完了
-    kadai.data.registerReceive('updateCalendarResult', function (msg) {
+    // 課題登録完了
+    kadai.data.registerReceive('putKadaiResult', function (msg) {
       // もうちょい　いいやり方はあるかもしれないが、とりあえず、
       // 更新したら、読み直す。
       kadai.model.readyCalendar();
+    });
+
+    // 課題取得完了
+    kadai.data.registerReceive('getKadaiResult', function (msg) {
+      kadaiData = msg;
+      $.gevent.publish('getKadaicomplete', [msg]);
     });
 
   };//initModule end
 
 
   login = function (queryObj) {
-    kadai.data.sendToServer('tryLogin',queryObj);
+    kadai.data.sendToServer( 'tryLogin', queryObj );
   };
 
   logout = function () {
-    kadai.data.sendToServer('tryLogout',{userId : accessKey.userId,
-                                       token  : accessKey.token});
+    kadai.data.sendToServer( 'tryLogout', accessKey );
   };
 
   islogind = function () {
@@ -95,12 +100,42 @@ kadai.model = (function () {
     return accessKey;
   };
 
+  putKadai = function (obj) {
+    // 自分の学年,クラスの課題を登録し、登録者がデータの所有者
+    let queryObj = { AKey      : accessKey,
+                     kadaiData : { gakunen       : personalInfo.gakunen,
+                                   cls           : personalInfo.cls,
+                                   owner         : accessKey.userId,
+                                   deadlineYear  : obj.year,
+                                   deadlineMonth : obj.month,
+                                   deadlineDay   : obj.day,
+                                   kyouka        : obj.kyouka,
+                                   contents      : obj.contents }};
+
+    kadai.data.sendToServer( 'putKadai', queryObj );
+    return true;
+  };
+
+  readyKadai = function () {
+    let queryObj = { AKey : accessKey,
+                     Skey : { gakunen       : personalInfo.gakunen,
+                              cls           : personalInfo.cls}};
+
+    kadai.data.sendToServer( 'getKadai', queryObj );
+    return true;
+  }
+
+  getKadai = function () {
+    return kadaiData;
+  }
+
   return { initModule      : initModule,
           login            : login,
           logout           : logout,
           islogind         : islogind,
           getAKey          : getAKey,
           putKadai         : putKadai,
+          readyKadai       : readyKadai,
           getKadai         : getKadai
         };
 }());

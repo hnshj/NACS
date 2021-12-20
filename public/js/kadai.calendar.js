@@ -31,7 +31,8 @@ kadai.calendar = (function () {
         day   : 0
       },
       stateMap = {
-        $container : null
+        $container : null,
+        kd         : []
       },
       jqueryMap = {},
       setJqueryMap, configModule, initModule, removeCalendar,
@@ -42,6 +43,7 @@ kadai.calendar = (function () {
     let $container = stateMap.$container;
     jqueryMap = {
       $container   : $container,
+      $hohoge: $container.find( '.hohoge' ),
       $previousWeek: $container.find( '.kadai-calendar-previousWeek' ),
       $back        : $container.find( '.kadai-calendar-back' ),
       $nextWeek    : $container.find( '.kadai-calendar-nextWeek' ),
@@ -84,16 +86,15 @@ kadai.calendar = (function () {
   //---ユーティリティメソッド---
   createTable = function () {
 
-    let i, j, str, weeks, calOneDay,
+    let i, j, str, weeks, kdOneDay,
         //年月日を指定して該当の日の分を引き当てる
         selectfunc = function ( year, month, day ) {
           return function ( target ) {
-            if (target.year == year && target.month == month && target.day == day) {
+            if (target.deadlineYear == year && target.deadlineMonth == month && target.deadlineDay == day) {
               return true;
             }
           };
-        },
-        kadaiContents = []; //何度も検索するのがもったいないので、カレンダーを検索した結果を保存しておく。(1週間分)
+        };
 
     jqueryMap.$main.append(configMap.tHeader);
 
@@ -122,17 +123,27 @@ kadai.calendar = (function () {
           str += '<td>課題</td>';
         } else {
           // ここで課題をいれる
-          str += '<td class="' + configMap.tContentClassName + '">';
-          /*
-          str += configMap.tbNikka;
+
           //-1は最初の一つが「課題」でずれるから
-          calOneDay = stateMap.cl.find(selectfunc(weeks[i-1].year, weeks[i-1].month, weeks[i-1].day));
-          if ( calOneDay != null ) {
-            if ( calOneDay.nikka != null ) {
-              str += calOneDay.nikka;
+          kdOneDay = stateMap.kd.filter(selectfunc(weeks[i-1].year, weeks[i-1].month, weeks[i-1].day));
+          if ( kdOneDay.length == 0 ) {
+            str += '<td class="' + configMap.tContentClassName + '"></td>';
+
+
+          } else {
+            let k;
+
+            str += '<td>';
+
+            for ( k = 0; k < kdOneDay.length; k++ ) {
+
+              str += '<p class="hohoge">';
+              str += kdOneDay[k].kyouka;
+              str += '(' + kdOneDay[k].contents + ')';
+              str += '</p>';
             }
-          */
-          str += '現代文完答22/論理的文章第五回</td>';
+            str += '<p class="' + configMap.tContentClassName + '">課題追加</p></td>';
+          }
         }
       }
       jqueryMap.$main.append(str);
@@ -154,18 +165,22 @@ kadai.calendar = (function () {
     stateMap.$container = $container;
     setJqueryMap();
 
+    stateMap.kd = kadai.model.getKadai();
+
     createTable();
 
     // 重複して登録すると、何度もイベントが発行される。それを避けるため、一旦削除
     $(document).off('click');
 
     // 「課題」のセルをクリックしたら、入力画面へ
+
     $(document).on('click', '.' + configMap.tContentClassName, function (event) {
       let weeks = kadai.util.getWeek(configMap.year,
                                      configMap.month-1, //月だけ0始まり
                                      configMap.day),
           gyouIndex  = this.parentNode.rowIndex, // 取得方法のサンプル。未使用。
-          retusIndex = this.cellIndex;
+//          retusIndex = this.cellIndex;
+retusIndex = this.parentNode.cellIndex;
 
       // -1は左端に「課題」のセルがある分の補正
       $.gevent.publish('inputKadai', [weeks[retusIndex-1]]);
@@ -177,6 +192,12 @@ kadai.calendar = (function () {
       .click( onBack );
     jqueryMap.$nextWeek
       .click( onNext );
+
+
+    $(document).on('click', '.hohoge', function (event) {
+      console.log('*******************************');
+    })
+
 
     return true;
   }

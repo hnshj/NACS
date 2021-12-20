@@ -190,19 +190,12 @@ kadai.shell = (function () {
 
     // ログイン成功
     $.gevent.subscribe( $container, 'loginSuccess', function (event, msg_map) {
-      let today = new Date();
 
       kadai.acct.configModule({showStr : msg_map.name});
       kadai.acct.initModule( jqueryMap.$acct );
 
-      changeAnchorPart({
-        status : 'calendar',
-        _status : {
-          year  : today.getFullYear(),
-          month : today.getMonth() + 1, //月だけ0始まり
-          day   : today.getDate()
-        }
-      }, null, true); //ログイン前には戻したくないので、履歴を消去
+      // 課題を一発取っておく
+      kadai.model.readyKadai();
     });
 
     // ログイン失敗
@@ -254,24 +247,32 @@ kadai.shell = (function () {
       });
     });
 
-/*
-    // ログアウト成功
-    $.gevent.subscribe( $container, 'logoutSuccess', function (event, msg_map) {
-      // 設計上、これらはonHashchangeで処理すべきだが、そのためには
-      // なぜダイアログを閉じたのかという情報が必要になり面倒。いい案を考える。
-      skt.acct.configModule({showStr : "ログインする"});
-      skt.acct.initModule( jqueryMap.$acct );
-
-    changeAnchorPart({
-      status : 'matiuke'
-      }, null, true); //ログイン前には戻したくないので、履歴を消去
+    // 課題入力キャンセル
+    $.gevent.subscribe( $container, 'inpuCancel', function (event, msg_map) {
+      changeAnchorPart({
+        status : 'calendar',
+        _status : {
+          year  : msg_map.year,
+          month : msg_map.month,
+          day   : msg_map.day
+        }
+      });
     });
 
-    // ログアウト失敗
-    $.gevent.subscribe( $container, 'logoutFailure', function (event, msg_map) {
-      //どうする？
+    // 課題取得完了
+    $.gevent.subscribe( $container, 'getKadaicomplete', function (event, msg_map) {
+      let today = new Date();
+
+      changeAnchorPart({
+        status : 'calendar',
+        _status : {
+          year  : today.getFullYear(),
+          month : today.getMonth() + 1, //月だけ0始まり
+          day   : today.getDate()
+        }
+      });
     });
-*/
+
     kadai.acct.configModule({showStr : 'ログインする'});
     kadai.acct.initModule( jqueryMap.$acct );
 

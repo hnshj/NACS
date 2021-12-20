@@ -37,11 +37,12 @@ kadai.data = (function () {
         case 'tryLogin':
           evt = dummyRegisterList.find( selectf( 'loginResult' ) );
 
-          if (targetObj.userId == 'suzuki' && targetObj.passWord == 'nittai') {
+          if (targetObj.userId == 'suzuki' && targetObj.passWord == 'hogehoge') {
             obj = { result   : true,
                     userId   : targetObj.userId,
                     token    : 'this is token',
-                    userKind : 100,
+                    gakunen  : 1,
+                    cls      : 2,
                     name     : "鈴木" };
 
             dummyLoginFlg = true;
@@ -66,6 +67,43 @@ kadai.data = (function () {
           } else {
             return true;
           }
+          break;
+
+        case 'putKadai':
+          evt = dummyRegisterList.find( selectf( 'putKadaiResult' ) );
+          obj = { result : true };
+          setTimeout(evt.cb(obj), 200);
+          break;
+
+        case 'getKadai':
+          evt = dummyRegisterList.find( selectf( 'getKadaiResult' ) );
+
+          obj = [{ gakunen       : 1,
+                   cls           : 2,
+                   ownerName     : '鈴木',
+                   deadlineYear  : 2021,
+                   deadlineMonth : 12,
+                   deadlineDay   : 21,
+                   kyouka        : '数学',
+                   contents      : 'クリアー1A P.200' },
+                 { gakunen       : 1,
+                   cls           : 2,
+                   ownerName     : '田中',
+                   deadlineYear  : 2021,
+                   deadlineMonth : 12,
+                   deadlineDay   : 21,
+                   kyouka        : '英語',
+                   contents      : 'シス単 P.300' },
+                 { gakunen       : 1,
+                   cls           : 2,
+                   ownerName     : '佐藤',
+                   deadlineYear  : 2021,
+                   deadlineMonth : 12,
+                   deadlineDay   : 25,
+                   kyouka        : '物理',
+                   contents      : '問題集 P.400' }]
+
+          setTimeout(evt.cb(obj), 200);
           break;
 
         default:

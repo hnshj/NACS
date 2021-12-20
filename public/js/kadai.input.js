@@ -55,13 +55,15 @@ kadai.input = (function () {
 
   //---イベントハンドラ---
   onOK = function () {
-    kadai.model.login({userId:jqueryMap.$kyoukaTextbox.val(),
+    kadai.model.putKadai({userId:jqueryMap.$kyoukaTextbox.val(),
                      passWord:jqueryMap.$contentsTextbox.val()});
     return false;
   }
 
   onCancel = function () {
-    $.gevent.publish('inpuCancel', [{}]);
+    $.gevent.publish('inpuCancel', [{ year  : configMap.year,
+                                      month : configMap.month,
+                                      day   : configMap.day }]);
     return false;
   }
 
@@ -80,6 +82,11 @@ kadai.input = (function () {
     $container.html( configMap.main_html );
     stateMap.$container = $container;
     setJqueryMap();
+
+    jqueryMap.$title.html(kadai.util.makeDateStr(configMap.year,
+                                                 configMap.month - 1, // 月だけ0始まり
+                                                 configMap.day)
+                          + 'が期限の課題を登録する');
 
     jqueryMap.$buttonOK
       .click( onOK );
