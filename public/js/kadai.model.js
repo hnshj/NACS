@@ -34,7 +34,6 @@ kadai.model = (function () {
                          gakunen : msg.gakunen,
                          cls     : msg.cls };
 
-        // ログイン時にみんな行うカレンダー取得
         $.gevent.publish('loginSuccess', [{ name: personalInfo.name }]);
 
       // ログイン失敗
@@ -63,7 +62,7 @@ kadai.model = (function () {
     kadai.data.registerReceive('putKadaiResult', function (msg) {
       // もうちょい　いいやり方はあるかもしれないが、とりあえず、
       // 更新したら、読み直す。
-      kadai.model.readyCalendar();
+      kadai.model.readyKadai();
     });
 
     // 課題取得完了
@@ -106,9 +105,9 @@ kadai.model = (function () {
                      kadaiData : { gakunen       : personalInfo.gakunen,
                                    cls           : personalInfo.cls,
                                    owner         : accessKey.userId,
-                                   deadlineYear  : obj.year,
-                                   deadlineMonth : obj.month,
-                                   deadlineDay   : obj.day,
+                                   deadlineYear  : obj.deadlineYear,
+                                   deadlineMonth : obj.deadlineMonth,
+                                   deadlineDay   : obj.deadlineDay,
                                    kyouka        : obj.kyouka,
                                    contents      : obj.contents }};
 

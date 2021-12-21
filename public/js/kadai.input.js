@@ -55,8 +55,11 @@ kadai.input = (function () {
 
   //---イベントハンドラ---
   onOK = function () {
-    kadai.model.putKadai({userId:jqueryMap.$kyoukaTextbox.val(),
-                     passWord:jqueryMap.$contentsTextbox.val()});
+    kadai.model.putKadai({ deadlineYear  : configMap.year,
+                           deadlineMonth : configMap.month,
+                           deadlineDay   : configMap.day,
+                           kyouka        : jqueryMap.$kyoukaTextbox.val(),
+                           contents      : jqueryMap.$contentsTextbox.val()});
     return false;
   }
 

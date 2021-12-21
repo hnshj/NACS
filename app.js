@@ -86,11 +86,11 @@
       db.findManyDocuments('students', {userId:msg.AKey.userId}, function (result) {
         // ログイン中のユーザにのみ回答
         if (result.length != 0 && msg.AKey.token == result[0].token ) {
-          db.insertDocument('renraku',
-                            msg.renrakuData,
+          db.insertDocument('kadai',
+                            msg.kadaiData,
                             function (res) {
 
-            //console.log('insertRenrakuResult done' + res);
+            console.log('putKadai');
             io.to(socket.id).emit('putKadaiResult', {result: true}); // 送信者のみに送信
           });
         } else {

@@ -21,8 +21,12 @@ kadai.calendar = (function () {
           + '<td>木</td>'
           + '<td>金</td>'
           + '<td>土</td></tr>',
-        tContentClassName : String()
-          + 'kadai-calendar-edit',
+        tblankClassName : String()
+          + 'kadai-calendar-blank',
+        tregisterdKadaiClassName : String()
+          + 'kadai-calendar-registerd',
+        taddKadaiClassName : String()
+          + 'kadai-calendar-addition',
         settable_map : { year  : true,
                          month : true,
                          day   : true},
@@ -127,8 +131,7 @@ kadai.calendar = (function () {
           //-1は最初の一つが「課題」でずれるから
           kdOneDay = stateMap.kd.filter(selectfunc(weeks[i-1].year, weeks[i-1].month, weeks[i-1].day));
           if ( kdOneDay.length == 0 ) {
-            str += '<td class="' + configMap.tContentClassName + '"></td>';
-
+            str += '<td class="' + configMap.tblankClassName + '"></td>';
 
           } else {
             let k;
@@ -137,12 +140,13 @@ kadai.calendar = (function () {
 
             for ( k = 0; k < kdOneDay.length; k++ ) {
 
-              str += '<p class="hohoge">';
+              str += '<p class="' + configMap.tregisterdKadaiClassName + '" ';
+              str += 'id ="' + 'aaa' + '" >';
               str += kdOneDay[k].kyouka;
               str += '(' + kdOneDay[k].contents + ')';
               str += '</p>';
             }
-            str += '<p class="' + configMap.tContentClassName + '">課題追加</p></td>';
+            str += '<p class="' + configMap.taddKadaiClassName + '">課題追加</p></td>';
           }
         }
       }
@@ -172,15 +176,34 @@ kadai.calendar = (function () {
     // 重複して登録すると、何度もイベントが発行される。それを避けるため、一旦削除
     $(document).off('click');
 
-    // 「課題」のセルをクリックしたら、入力画面へ
-
-    $(document).on('click', '.' + configMap.tContentClassName, function (event) {
+    // 空白セルをクリックしたら、入力画面へ
+    $(document).on('click', '.' + configMap.tblankClassName, function (event) {
       let weeks = kadai.util.getWeek(configMap.year,
                                      configMap.month-1, //月だけ0始まり
                                      configMap.day),
-          gyouIndex  = this.parentNode.rowIndex, // 取得方法のサンプル。未使用。
-//          retusIndex = this.cellIndex;
-retusIndex = this.parentNode.cellIndex;
+          retusIndex = this.cellIndex;
+
+      // -1は左端に「課題」のセルがある分の補正
+      $.gevent.publish('inputKadai', [weeks[retusIndex-1]]);
+    });
+
+    // 課題をクリックしたら、入力画面へ
+    $(document).on('click', '.' + configMap.tregisterdKadaiClassName, function (event) {
+      let weeks = kadai.util.getWeek(configMap.year,
+                                     configMap.month-1, //月だけ0始まり
+                                     configMap.day),
+          retusIndex = this.parentNode.cellIndex;
+
+      // -1は左端に「課題」のセルがある分の補正
+      $.gevent.publish('inputKadai', [weeks[retusIndex-1]]);
+    });
+
+    // 課題を追加をクリックしたら、入力画面へ
+    $(document).on('click', '.' + configMap.taddKadaiClassName, function (event) {
+      let weeks = kadai.util.getWeek(configMap.year,
+                                     configMap.month-1, //月だけ0始まり
+                                     configMap.day),
+          retusIndex = this.parentNode.cellIndex;
 
       // -1は左端に「課題」のセルがある分の補正
       $.gevent.publish('inputKadai', [weeks[retusIndex-1]]);
@@ -192,13 +215,6 @@ retusIndex = this.parentNode.cellIndex;
       .click( onBack );
     jqueryMap.$nextWeek
       .click( onNext );
-
-
-    $(document).on('click', '.hohoge', function (event) {
-
-      console.log(String(Math.random()).slice(2,12));
-    })
-
 
     return true;
   }
