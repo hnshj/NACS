@@ -86,13 +86,24 @@
       db.findManyDocuments('students', {userId:msg.AKey.userId}, function (result) {
         // ログイン中のユーザにのみ回答
         if (result.length != 0 && msg.AKey.token == result[0].token ) {
-          db.insertDocument('kadai',
-                            msg.kadaiData,
-                            function (res) {
+          if ( msg.kadaiId == "" ) {
+            db.insertDocument('kadai',
+                              msg.kadaiData,
+                              function (res) {
 
-            console.log('putKadai');
-            io.to(socket.id).emit('putKadaiResult', {result: true}); // 送信者のみに送信
-          });
+              console.log('putKadai insert');
+              io.to(socket.id).emit('putKadaiResult', {result: true}); // 送信者のみに送信
+            });
+          } else {
+            db.updateDocument('kadai',
+                              { _id : 'ObjectId("' + msg.kadaiId + '")' },
+                              {$set:msg.kadaiData},
+                              function (res) {
+
+              console.log('putKadai upsert' + msg.kadaiId);
+              io.to(socket.id).emit('putKadaiResult', {result: true}); // 送信者のみに送信
+            });
+          }
         } else {
           io.to(socket.id).emit('putKadaiResult', {result: false}); // 送信者のみに送信
         }

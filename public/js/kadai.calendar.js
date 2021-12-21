@@ -141,12 +141,10 @@ kadai.calendar = (function () {
             for ( k = 0; k < kdOneDay.length; k++ ) {
 
               str += '<p class="' + configMap.tregisterdKadaiClassName + '" ';
-              str += 'id ="' + 'aaa' + '" >';
-              str += kdOneDay[k].kyouka;
-              str += '(' + kdOneDay[k].contents + ')';
-              str += '</p>';
+              str += 'id ="' + kdOneDay[k]._id + '" >';
+              str += kdOneDay[k].contents + ':' + kdOneDay[k].kyouka + '</p>';
             }
-            str += '<p class="' + configMap.taddKadaiClassName + '">課題追加</p></td>';
+            str += '<p class="' + configMap.taddKadaiClassName + '">もっと追加する</p></td>';
           }
         }
       }
@@ -184,18 +182,12 @@ kadai.calendar = (function () {
           retusIndex = this.cellIndex;
 
       // -1は左端に「課題」のセルがある分の補正
-      $.gevent.publish('inputKadai', [weeks[retusIndex-1]]);
-    });
-
-    // 課題をクリックしたら、入力画面へ
-    $(document).on('click', '.' + configMap.tregisterdKadaiClassName, function (event) {
-      let weeks = kadai.util.getWeek(configMap.year,
-                                     configMap.month-1, //月だけ0始まり
-                                     configMap.day),
-          retusIndex = this.parentNode.cellIndex;
-
-      // -1は左端に「課題」のセルがある分の補正
-      $.gevent.publish('inputKadai', [weeks[retusIndex-1]]);
+      $.gevent.publish('inputKadai', [ { year     : weeks[retusIndex-1].year,
+                                         month    : weeks[retusIndex-1].month,
+                                         day      : weeks[retusIndex-1].day,
+                                         kadaiId  : "",
+                                         contents : "",
+                                         kyouka   : "" } ]);
     });
 
     // 課題を追加をクリックしたら、入力画面へ
@@ -206,7 +198,29 @@ kadai.calendar = (function () {
           retusIndex = this.parentNode.cellIndex;
 
       // -1は左端に「課題」のセルがある分の補正
-      $.gevent.publish('inputKadai', [weeks[retusIndex-1]]);
+      $.gevent.publish('inputKadai', [ { year     : weeks[retusIndex-1].year,
+                                         month    : weeks[retusIndex-1].month,
+                                         day      : weeks[retusIndex-1].day,
+                                         kadaiId  : "",
+                                         contents : "",
+                                         kyouka   : "" } ]);
+    });
+
+    // 課題をクリックしたら、入力画面へ
+    $(document).on('click', '.' + configMap.tregisterdKadaiClassName, function (event) {
+      let weeks = kadai.util.getWeek(configMap.year,
+                                     configMap.month-1, //月だけ0始まり
+                                     configMap.day),
+          retusIndex = this.parentNode.cellIndex,
+          clist = this.innerHTML.split(':');
+
+      // -1は左端に「課題」のセルがある分の補正
+      $.gevent.publish('inputKadai', [ { year     : weeks[retusIndex-1].year,
+                                         month    : weeks[retusIndex-1].month,
+                                         day      : weeks[retusIndex-1].day,
+                                         kadaiId  : this.id,
+                                         contents : clist[0],
+                                         kyouka   : clist[1] }]);
     });
 
     jqueryMap.$previousWeek

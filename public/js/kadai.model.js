@@ -99,17 +99,18 @@ kadai.model = (function () {
     return accessKey;
   };
 
-  putKadai = function (obj) {
+  putKadai = function (kadaiId, obj) {
     // 自分の学年,クラスの課題を登録し、登録者がデータの所有者
     let queryObj = { AKey      : accessKey,
-                     kadaiData : { gakunen       : personalInfo.gakunen,
-                                   cls           : personalInfo.cls,
+                     kadaiId   : kadaiId,
+                     kadaiData : { gakunen       : Number(personalInfo.gakunen),
+                                   cls           : Number(personalInfo.cls),
                                    owner         : accessKey.userId,
-                                   deadlineYear  : obj.deadlineYear,
-                                   deadlineMonth : obj.deadlineMonth,
-                                   deadlineDay   : obj.deadlineDay,
-                                   kyouka        : obj.kyouka,
-                                   contents      : obj.contents }};
+                                   deadlineYear  : Number(obj.deadlineYear),
+                                   deadlineMonth : Number(obj.deadlineMonth),
+                                   deadlineDay   : Number(obj.deadlineDay),
+                                   contents      : obj.contents,
+                                   kyouka        : obj.kyouka }};
 
     kadai.data.sendToServer( 'putKadai', queryObj );
     return true;

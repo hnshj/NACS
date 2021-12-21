@@ -14,9 +14,13 @@ kadai.shell = (function () {
                 input           : true
               },
       _status : {
-        year  : true,                  // status : calendar,inputのとき使用
-        month : true,                  // status : calendar,inputのとき使用
-        day   : true                   // status : calendar,inputのとき使用
+        year     : true,                  // status : calendar,inputのとき使用
+        month    : true,                  // status : calendar,inputのとき使用
+        day      : true,                  // status : calendar,inputのとき使用
+        kadaiId  : true,                  // status : inputのとき使用
+        kyouka   : true,                  // status : inputのとき使用
+        contents : true                   // status : inputのとき使用
+
       }
       // アンカーマップとして許容される型を事前に指定するためのもの。
       // 例えば、color : {red : true, blue : true}
@@ -104,9 +108,13 @@ kadai.shell = (function () {
 
     // 課題入力の場合
     } else if ( anchor_map.status == 'input' ) {
-      kadai.input.configModule({ year  : anchor_map._status.year,
-                                 month : anchor_map._status.month,
-                                 day   : anchor_map._status.day });
+      kadai.input.configModule({ year     : anchor_map._status.year,
+                                 month    : anchor_map._status.month,
+                                 day      : anchor_map._status.day,
+                                 kadaiId  : anchor_map._status.kadaiId,
+                                 kyouka   : anchor_map._status.kyouka,
+                                 contents : anchor_map._status.contents });
+
       kadai.input.initModule( jqueryMap.$main );
 
     // ログアウトの場合
@@ -222,9 +230,12 @@ kadai.shell = (function () {
       changeAnchorPart({
         status : 'input',
         _status : {
-          year  : msg_map.year,
-          month : msg_map.month,
-          day   : msg_map.day
+          year     : msg_map.year,
+          month    : msg_map.month,
+          day      : msg_map.day,
+          kadaiId  : msg_map.kadaiId,
+          contents : msg_map.contents,
+          kyouka   : msg_map.kyouka
         }
       });
     });
