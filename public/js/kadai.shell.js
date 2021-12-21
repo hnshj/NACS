@@ -260,7 +260,7 @@ kadai.shell = (function () {
     });
 
     // 課題取得完了
-    $.gevent.subscribe( $container, 'getKadaicomplete', function (event, msg_map) {
+    $.gevent.subscribe( $container, 'readyKadaicomplete', function (event, msg_map) {
       let today = new Date();
 
       changeAnchorPart({

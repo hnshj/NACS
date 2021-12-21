@@ -1,0 +1,12 @@
+[
+ {"userId":"suzuki"     , "name":"鈴木"      , "gakunen":1, "cls":2, "passWord":"hogehoge"}
+,{"userId":"student0001", "name":"浜松　一郎", "gakunen":1, "cls":1, "passWord":"hogehoge"}
+,{"userId":"student0002", "name":"浜松　二郎", "gakunen":1, "cls":1, "passWord":"hogehoge"}
+,{"userId":"student0003", "name":"浜松　三郎", "gakunen":1, "cls":1, "passWord":"hogehoge"}
+,{"userId":"student0004", "name":"浜松　四郎", "gakunen":1, "cls":2, "passWord":"hogehoge"}
+,{"userId":"student0005", "name":"浜松　五郎", "gakunen":1, "cls":2, "passWord":"hogehoge"}
+,{"userId":"student0006", "name":"浜松　六郎", "gakunen":1, "cls":2, "passWord":"hogehoge"}
+,{"userId":"student0007", "name":"浜松　七郎", "gakunen":2, "cls":1, "passWord":"hogehoge"}
+,{"userId":"student0008", "name":"浜松　八郎", "gakunen":2, "cls":1, "passWord":"hogehoge"}
+,{"userId":"student0009", "name":"浜松　九郎", "gakunen":2, "cls":2, "passWord":"hogehoge"}
+]

@@ -75,8 +75,8 @@ kadai.data = (function () {
           setTimeout(evt.cb(obj), 200);
           break;
 
-        case 'getKadai':
-          evt = dummyRegisterList.find( selectf( 'getKadaiResult' ) );
+        case 'readyKadai':
+          evt = dummyRegisterList.find( selectf( 'readyKadaiResult' ) );
 
           obj = [{ gakunen       : 1,
                    cls           : 2,

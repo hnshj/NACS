@@ -20,18 +20,21 @@
 
     // ログイン処理
     socket.on('tryLogin', function (msg) {
-      db.findManyDocuments('user', {userId:msg.userId}, function (result) {
+      db.findManyDocuments('students', {userId:msg.userId}, function (result) {
         if (result.length != 0) {
           crypt.compare(msg.passWord, result[0].passWord, function (res) {
             //パスワードが一致
             if (res) {
-              //ソケットIDをトークンとして設定し、ログイン状態とする
-              db.updateDocument('user', {userId:msg.userId}, {$set:{token:socket.id}}, function (res) {
-                io.to(socket.id).emit('loginResult', {result: true,
-                                                      userId:msg.userId,
-                                                      token: socket.id,
-                                                      userKind:result[0].userKind,
-                                                      name:result[0].name}); // 送信者のみに送信
+              let token = String(Math.random()).slice(2,12);
+
+              //お手軽なランダム文字列をトークンとして設定し、ログイン状態とする
+              db.updateDocument('students', {userId:msg.userId}, {$set:{token:token}}, function (res) {
+                io.to(socket.id).emit('loginResult', {result  : true,
+                                                      userId  : msg.userId,
+                                                      token   : token,
+                                                      gakunen : result[0].gakunen,
+                                                      cls     : result[0].cls,
+                                                      name    : result[0].name}); // 送信者のみに送信
               });
 
             //パスワードが違う
@@ -46,9 +49,41 @@
       });
     });
 
+    // ログアウト処理
+    socket.on('tryLogout', function (msg) {
+      db.findManyDocuments('students', {userId:msg.userId}, function (result) {
+        if (result.length != 0) {
+          //トークンを空文字列とし、ログアウト状態とする
+          db.updateDocument('students', {userId:msg.userId}, {$set:{token:""}}, function (res) {
+            io.to(socket.id).emit('logoutResult', {result: true}); // 送信者のみに送信
+          });
+        // 該当ユーザがいない
+        } else {
+          io.to(socket.id).emit('logoutResult', {result: false}); // 送信者のみに送信
+        }
+      });
+    });
+
+    // 課題の取得
+    socket.on('readyKadai', function (msg) {
+      db.findManyDocuments('students', {userId:msg.AKey.userId}, function (result) {
+        // ログイン中のユーザにのみ回答
+        if (result.length != 0 && msg.AKey.token == result[0].token ) {
+          db.findManyDocuments('kadai',
+                                msg.SKey,
+                                function (res) {
+
+            io.to(socket.id).emit('readyKadaiResult', res); // 送信者のみに送信
+          });
+        } else {
+          io.to(socket.id).emit('readyKadaiResult', []); // 送信者のみに送信
+        }
+      });
+    });
+
     // 課題の登録
     socket.on('putKadai', function (msg) {
-      db.findManyDocuments('user', {userId:msg.AKey.userId}, function (result) {
+      db.findManyDocuments('students', {userId:msg.AKey.userId}, function (result) {
         // ログイン中のユーザにのみ回答
         if (result.length != 0 && msg.AKey.token == result[0].token ) {
           db.insertDocument('renraku',
@@ -56,10 +91,10 @@
                             function (res) {
 
             //console.log('insertRenrakuResult done' + res);
-            io.to(socket.id).emit('insertRenrakuResult', res); // 送信者のみに送信
+            io.to(socket.id).emit('putKadaiResult', {result: true}); // 送信者のみに送信
           });
         } else {
-          io.to(socket.id).emit('anotherLogin', {}); // 送信者のみに送信
+          io.to(socket.id).emit('putKadaiResult', {result: false}); // 送信者のみに送信
         }
       });
     });

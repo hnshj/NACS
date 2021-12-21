@@ -195,7 +195,8 @@ retusIndex = this.parentNode.cellIndex;
 
 
     $(document).on('click', '.hohoge', function (event) {
-      console.log('*******************************');
+
+      console.log(String(Math.random()).slice(2,12));
     })
 
 

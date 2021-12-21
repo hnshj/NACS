@@ -67,9 +67,9 @@ kadai.model = (function () {
     });
 
     // 課題取得完了
-    kadai.data.registerReceive('getKadaiResult', function (msg) {
+    kadai.data.registerReceive('readyKadaiResult', function (msg) {
       kadaiData = msg;
-      $.gevent.publish('getKadaicomplete', [msg]);
+      $.gevent.publish('readyKadaicomplete', [msg]);
     });
 
   };//initModule end
@@ -121,7 +121,7 @@ kadai.model = (function () {
                      Skey : { gakunen       : personalInfo.gakunen,
                               cls           : personalInfo.cls}};
 
-    kadai.data.sendToServer( 'getKadai', queryObj );
+    kadai.data.sendToServer( 'readyKadai', queryObj );
     return true;
   }
 
