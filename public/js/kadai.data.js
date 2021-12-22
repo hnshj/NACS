@@ -9,8 +9,8 @@ kadai.data = (function () {
   'use strict';
 
   // 次の2行のうち、どちらかを有効にする。
-//  const dummyFlg = true;                      // サーバを使わない場合はこちら
-  const dummyFlg = false , socket   = io(); // サーバを使う場合(本番)はこちら
+  const dummyFlg = true;                      // サーバを使わない場合はこちら
+//  const dummyFlg = false , socket   = io(); // サーバを使う場合(本番)はこちら
 
   let initModule, sendToServer, registerReceive,
       dummyRegisterList = [],

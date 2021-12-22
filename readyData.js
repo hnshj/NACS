@@ -37,6 +37,7 @@
           complete_num++;
           if (complete_num == listnum) {
               console.log('addStudents done');
+              process.exit(0);
           }
         });
       });

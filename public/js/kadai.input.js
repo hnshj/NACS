@@ -45,7 +45,7 @@ kadai.input = (function () {
       },
       jqueryMap = {},
       setJqueryMap, configModule, initModule, removeInput,
-      onOK, onCancel;
+      onOK, onCancel, onRemove;
 
   //---DOMメソッド---
   setJqueryMap = function () {
@@ -70,7 +70,7 @@ kadai.input = (function () {
                             deadlineMonth : configMap.month,
                             deadlineDay   : configMap.day,
                             contents      : jqueryMap.$contentsTextbox.val(),
-                            kyouka        : jqueryMap.$kyoukaTextbox.val()});
+                            kyouka        : jqueryMap.$kyoukaTextbox.val() } );
     return false;
   }
 
@@ -78,6 +78,11 @@ kadai.input = (function () {
     $.gevent.publish('inpuCancel', [{ year  : configMap.year,
                                       month : configMap.month,
                                       day   : configMap.day }]);
+    return false;
+  }
+
+  onRemove = function () {
+    kadai.model.removeKadai( configMap.kadaiId );
     return false;
   }
 
@@ -110,7 +115,8 @@ kadai.input = (function () {
       .click( onOK );
     jqueryMap.$buttonCancel
       .click( onCancel );
-
+    jqueryMap.$buttonRemove
+      .click( onRemove );
     return true;
   }
 

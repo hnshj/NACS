@@ -7,7 +7,7 @@ kadai.model = (function () {
   'use strict';
 
   let initModule, login, logout, islogind, getAKey, putKadai, readyKadai,
-      getKadai, initLocal, //関数
+      getKadai, removeKadai, initLocal, //関数
       accessKey, personalInfo, kadaiData;//モジュールスコープ変数
 
   initLocal = function () {
@@ -71,6 +71,11 @@ kadai.model = (function () {
       $.gevent.publish('readyKadaicomplete', [msg]);
     });
 
+    // 課題削除完了
+    kadai.data.registerReceive('removeKadaiResult', function (msg) {
+      kadai.model.readyKadai();
+    });
+
   };//initModule end
 
 
@@ -100,6 +105,16 @@ kadai.model = (function () {
   };
 
   putKadai = function (kadaiId, obj) {
+    let nowStr = "",
+        now = new Date();
+
+    nowStr += now.getFullYear() + ':';
+    nowStr += (now.getMonth() + 1 ) + ':', //月だけ0始まり
+    nowStr += now.getDate() + ':';
+    nowStr += now.getHours() + ':';
+    nowStr += now.getMinutes() + ':';
+    nowStr += now.getSeconds();
+
     // 自分の学年,クラスの課題を登録し、登録者がデータの所有者
     let queryObj = { AKey      : accessKey,
                      kadaiId   : kadaiId,
@@ -110,7 +125,8 @@ kadai.model = (function () {
                                    deadlineMonth : Number(obj.deadlineMonth),
                                    deadlineDay   : Number(obj.deadlineDay),
                                    contents      : obj.contents,
-                                   kyouka        : obj.kyouka }};
+                                   kyouka        : obj.kyouka,
+                                   putDate       : nowStr }};
 
     kadai.data.sendToServer( 'putKadai', queryObj );
     return true;
@@ -118,8 +134,8 @@ kadai.model = (function () {
 
   readyKadai = function () {
     let queryObj = { AKey : accessKey,
-                     Skey : { gakunen       : personalInfo.gakunen,
-                              cls           : personalInfo.cls}};
+                     Skey : { gakunen       : Number(personalInfo.gakunen),
+                              cls           : Number(personalInfo.cls) }};
 
     kadai.data.sendToServer( 'readyKadai', queryObj );
     return true;
@@ -129,6 +145,14 @@ kadai.model = (function () {
     return kadaiData;
   }
 
+  removeKadai = function ( kadaiId ) {
+    let queryObj = { AKey      : accessKey,
+                     kadaiId   : kadaiId };
+
+    kadai.data.sendToServer( 'removeKadai', queryObj );
+    return true;
+  };
+
   return { initModule      : initModule,
           login            : login,
           logout           : logout,
@@ -136,6 +160,7 @@ kadai.model = (function () {
           getAKey          : getAKey,
           putKadai         : putKadai,
           readyKadai       : readyKadai,
-          getKadai         : getKadai
+          getKadai         : getKadai,
+          removeKadai      : removeKadai
         };
 }());

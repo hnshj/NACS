@@ -47,7 +47,6 @@ kadai.calendar = (function () {
     let $container = stateMap.$container;
     jqueryMap = {
       $container   : $container,
-      $hohoge: $container.find( '.hohoge' ),
       $previousWeek: $container.find( '.kadai-calendar-previousWeek' ),
       $back        : $container.find( '.kadai-calendar-back' ),
       $nextWeek    : $container.find( '.kadai-calendar-nextWeek' ),

@@ -11,6 +11,7 @@
       io       = require('socket.io')( http ),
       crypt    = require('./lib/crypt'),
       db       = require('./lib/database'),
+      ObjectId = require('mongodb').ObjectID,
       port     = 4001;
 
 //------モジュールスコープ変数e--------
@@ -66,11 +67,19 @@
 
     // 課題の取得
     socket.on('readyKadai', function (msg) {
+/*    console.log('readyKadai:userId:'  + msg.AKey.userId);
+      console.log('readyKadai:token:'   + msg.AKey.token);
+      console.log('readyKadai:gakunen:' + msg.Skey.gakunen);
+      console.log('readyKadai:cls:'     + msg.Skey.cls);
+      console.log('readyKadai:Skey:'    + msg.Skey);*/
       db.findManyDocuments('students', {userId:msg.AKey.userId}, function (result) {
         // ログイン中のユーザにのみ回答
         if (result.length != 0 && msg.AKey.token == result[0].token ) {
           db.findManyDocuments('kadai',
-                                msg.SKey,
+                                //msg.SKey, ??
+                                {gakunen   : msg.Skey.gakunen,
+                                 cls       : msg.Skey.cls,
+                                 removeflg : 0},
                                 function (res) {
 
             io.to(socket.id).emit('readyKadaiResult', res); // 送信者のみに送信
@@ -86,6 +95,10 @@
       db.findManyDocuments('students', {userId:msg.AKey.userId}, function (result) {
         // ログイン中のユーザにのみ回答
         if (result.length != 0 && msg.AKey.token == result[0].token ) {
+
+          // 削除はホントに消さず、削除フラグを立てる。登録はフラグを倒しておく。
+          msg.kadaiData.removeflg = 0;
+
           if ( msg.kadaiId == "" ) {
             db.insertDocument('kadai',
                               msg.kadaiData,
@@ -96,16 +109,38 @@
             });
           } else {
             db.updateDocument('kadai',
-                              { _id : 'ObjectId("' + msg.kadaiId + '")' },
+                              { _id   : ObjectId(msg.kadaiId) ,
+                                owner : msg.AKey.userId },
                               {$set:msg.kadaiData},
                               function (res) {
 
-              console.log('putKadai upsert' + msg.kadaiId);
+              console.log('putKadai update:' + msg.kadaiId);
               io.to(socket.id).emit('putKadaiResult', {result: true}); // 送信者のみに送信
             });
           }
         } else {
           io.to(socket.id).emit('putKadaiResult', {result: false}); // 送信者のみに送信
+        }
+      });
+    });
+
+    // 課題の削除
+    socket.on('removeKadai', function (msg) {
+      db.findManyDocuments('students', {userId:msg.AKey.userId}, function (result) {
+        // ログイン中のユーザにのみ回答
+        if (result.length != 0 && msg.AKey.token == result[0].token ) {
+          // 削除はホントに消さず、削除フラグを立てる。
+          db.updateDocument('kadai',
+                            { _id : ObjectId(msg.kadaiId),
+                              owner : msg.AKey.userId },
+                            {$set:{removeflg:1}},
+                            function (res) {
+
+            console.log('removeKadai:' + msg.kadaiId);
+            io.to(socket.id).emit('removeKadaiResult', {result: true}); // 送信者のみに送信
+          });
+        } else {
+          io.to(socket.id).emit('removeKadaiResult', {result: false}); // 送信者のみに送信
         }
       });
     });
