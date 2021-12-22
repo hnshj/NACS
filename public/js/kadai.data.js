@@ -106,6 +106,12 @@ kadai.data = (function () {
           setTimeout(evt.cb(obj), 200);
           break;
 
+        case 'removeKadai':
+          evt = dummyRegisterList.find( selectf( 'removeKadaiResult' ) );
+          obj = { result : true };
+          setTimeout(evt.cb(obj), 200);
+          break;
+
         default:
           console.log('something wrong');
         break;
