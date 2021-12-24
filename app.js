@@ -129,16 +129,18 @@
       db.findManyDocuments('students', {userId:msg.AKey.userId}, function (result) {
         // ログイン中のユーザにのみ回答
         if (result.length != 0 && msg.AKey.token == result[0].token ) {
-          // 削除はホントに消さず、削除フラグを立てる。
-          db.updateDocument('kadai',
-                            { _id : ObjectId(msg.kadaiId),
-                              owner : msg.AKey.userId },
-                            {$set:{removeflg:1}},
-                            function (res) {
+          if ( msg.kadaiId != "" ) { // 存在しない課題を削除しようとしておちる件対応
+            // 削除はホントに消さず、削除フラグを立てる。
+            db.updateDocument('kadai',
+                              { _id : ObjectId(msg.kadaiId),
+                                owner : msg.AKey.userId },
+                              {$set:{removeflg:1}},
+                              function (res) {
 
-            console.log('removeKadai:' + msg.kadaiId);
-            io.to(socket.id).emit('removeKadaiResult', {result: true}); // 送信者のみに送信
-          });
+              console.log('removeKadai:' + msg.kadaiId);
+              io.to(socket.id).emit('removeKadaiResult', {result: true}); // 送信者のみに送信
+            });
+          }
         } else {
           io.to(socket.id).emit('removeKadaiResult', {result: false}); // 送信者のみに送信
         }
