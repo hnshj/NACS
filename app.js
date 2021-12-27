@@ -111,7 +111,8 @@
             db.updateDocument('kadai',
                               { _id   : ObjectId(msg.kadaiId) ,
                                 owner : msg.AKey.userId },
-                              {$set:msg.kadaiData},
+                              { $push : {contents : msg.kadaiData.contents[0],
+                                         kyouka   : msg.kadaiData.kyouka[0]}},
                               function (res) {
 
               console.log('putKadai update:' + msg.kadaiId);

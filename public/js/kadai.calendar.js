@@ -141,7 +141,10 @@ kadai.calendar = (function () {
 
               str += '<p class="' + configMap.tregisterdKadaiClassName + '" ';
               str += 'id ="' + kdOneDay[k]._id + '" >';
-              str += kdOneDay[k].contents + ':' + kdOneDay[k].kyouka + '</p>';
+              str += kdOneDay[k].contents[kdOneDay[k].contents.length-1]
+                     + ':'
+                     + kdOneDay[k].kyouka[kdOneDay[k].kyouka.length-1]
+                     + '</p>';
             }
             str += '<p class="' + configMap.taddKadaiClassName + '">もっと追加する</p></td>';
           }

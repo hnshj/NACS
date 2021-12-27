@@ -124,8 +124,8 @@ kadai.model = (function () {
                                    deadlineYear  : Number(obj.deadlineYear),
                                    deadlineMonth : Number(obj.deadlineMonth),
                                    deadlineDay   : Number(obj.deadlineDay),
-                                   contents      : obj.contents,
-                                   kyouka        : obj.kyouka,
+                                   contents      : [obj.contents],
+                                   kyouka        : [obj.kyouka],
                                    putDate       : nowStr }};
 
     kadai.data.sendToServer( 'putKadai', queryObj );

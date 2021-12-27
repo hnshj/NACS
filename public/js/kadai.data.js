@@ -84,24 +84,24 @@ kadai.data = (function () {
                    deadlineYear  : 2021,
                    deadlineMonth : 12,
                    deadlineDay   : 21,
-                   kyouka        : '数学',
-                   contents      : 'クリアー1A P.200' },
+                   kyouka        : ['数学'],
+                   contents      : ['クリアー1A P.200'] },
                  { gakunen       : 1,
                    cls           : 2,
                    ownerName     : '田中',
                    deadlineYear  : 2021,
                    deadlineMonth : 12,
                    deadlineDay   : 21,
-                   kyouka        : '英語',
-                   contents      : 'シス単 P.300' },
+                   kyouka        : ['英語'],
+                   contents      : ['シス単 P.300'] },
                  { gakunen       : 1,
                    cls           : 2,
                    ownerName     : '佐藤',
                    deadlineYear  : 2021,
                    deadlineMonth : 12,
                    deadlineDay   : 25,
-                   kyouka        : '物理',
-                   contents      : '問題集 P.400' }]
+                   kyouka        : ['物理'],
+                   contents      : ['問題集 P.400'] }]
 
           setTimeout(evt.cb(obj), 200);
           break;
