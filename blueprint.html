@@ -1,0 +1,100 @@
+<html>
+  <head>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/8.13.7/mermaid.min.js"></script>
+
+    <style type="text/css">
+      p {width:60%;}
+    </style>
+
+  </head>
+  <body>
+    <h1>概要</h1>
+    <p>
+      プログラムの作成は複雑さとの戦いであり、そして混沌とした複雑さには誰も勝てない。
+      プログラムに何かしらの構造を入れて、その複雑さを人間に制御しうる程度に抑えるための工夫を<strong>設計</strong>という。
+    </p>
+    <p>
+      一般に、プログラムは設計し、実装し(コードを書くのはこの部分)、テストをして出来上がると言われている。
+    </p>
+    <p>
+      チームで一つのプログラムを作る場合には、設計図が表すところのイメージをチームのメンバー間で共有する必要がある。
+    </p>
+    <p>
+      本プログラムは<a href="https://www.oreilly.co.jp/books/9784873116730/">シングルページWebアプリケーション――Node.js、MongoDBを活用したJavaScript SPA</a>
+      をベースに作ってある。
+    </p>
+
+    <h1>フォルダ構成</h1>
+    <ul>
+      <li>クライアント：publicフォルダ以下のすべて。</li>
+      <li>サーバ：app.jsとlibフォルダ以下のすべて。</li>
+      <li>データ準備：readyData.jsとdata2DBフォルダ以下のすべて。</li>
+    </ul>
+
+    <h1>準備</h1>
+    <p>
+      app.jsはnode.js上で動くので、node.jsが必要。また、mongoDBも必要。
+    </p>
+
+    <h1>各種処理</h1>
+    <ul>
+      <li>起動
+        <div class="mermaid">
+          sequenceDiagram
+            participant u  as ユーザ
+            participant sv as サーバ
+            u->>sv: ブラウザで該当URLにアクセス
+            sv->>u: public/kadai.htmlを送る
+        </div>
+      </li>
+      <li>ログインするボタン押下
+        <div class="mermaid">
+          sequenceDiagram
+            participant u  as ユーザ
+            participant sh as kadai.shell
+            participant a  as kadai.acct
+            participant m  as kadai.model
+            participant l  as kadai.login
+            participant an as uriAnchor
+            participant b  as ブラウザ
+            u->>a: ログインするボタンを押す
+            a->>m: ログイン中かどうか判定
+            m->>a: ログインしてないよ
+            a->>sh: tryLoginイベント送信
+            sh->>an: setAnchor
+            an->>b: URIアンカーを設定
+            Note right of an : これをするとブラウザの履歴に残る
+            b->>sh: onHashchangeイベント送信
+            Note right of sh : 画面遷移は基本ここから
+            sh->>l: モジュールの初期化
+        </div>
+      </li>
+      <li>ログイン処理
+        <div class="mermaid">
+          sequenceDiagram
+            participant u  as ユーザ
+            participant sh as kadai.shell
+            participant l  as kadai.login
+            participant m  as kadai.model
+            participant d  as kadai.data
+            participant an as uriAnchor
+            participant sv as サーバ
+            u->>l: ユーザID等入力後OKボタンを押す
+            l->>m: ログイン処理
+            m->>d: ログイン処理
+            Note right of d : 通信はkadai.dataに集約
+            d->>sv: ログイン処理
+            sv->>m: ログイン成功
+            m->>sh: loginSuccessイベント送信
+            sh->>m: 登録済の課題を取得
+            m->>d: 課題の取得
+            d->>sv: 課題の取得
+            sv->>m: 課題の取得完了
+            m->>sh: 課題の取得完了
+            sh->>an: setAnchorしてカレンダー表示へ
+            Note right of an : 以降略
+        </div>
+      </li>
+  </body>
+</html>
