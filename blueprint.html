@@ -7,6 +7,48 @@
       p {width:60%;}
     </style>
 
+    <script>
+      let clientContents, serverContents;
+
+      window.onload = function () {
+        let toggle,
+            client, clientToggle,
+            server, serverToggle;
+
+        toggle = function () {
+          let flg = false;
+          return function () {
+            if ( flg == true ) {
+              flg = false;
+            } else {
+              flg = true;
+            }
+            return flg;
+          }
+        }
+
+        clientToggle = toggle();
+        serverToggle = toggle();
+        client = document.getElementById("client");
+        server = document.getElementById("server");
+
+        client.onclick = function () {
+          if (clientToggle()) {
+            client.innerHTML = clientContents;
+          } else {
+            client.innerHTML = "+";
+          }
+        }
+        server.onclick = function () {
+          if (serverToggle()) {
+            server.innerHTML = serverContents;
+          } else {
+            server.innerHTML = "+";
+          }
+        }
+      }
+    </script>
+
   </head>
   <body>
     <h1>概要</h1>
@@ -25,10 +67,59 @@
       をベースに作ってある。
     </p>
 
-    <h1>フォルダ構成</h1>
+    <h1>登場人物</h1>
     <ul>
-      <li>クライアント：publicフォルダ以下のすべて。</li>
+      <li>
+        <p>クライアント：publicフォルダ以下のすべて。</p>
+        <p Id="client">+</p>
+        <script>
+          clientContents = "<ul>"
+                            +"<li>"
+                              +"kadai.shell:コントローラ。イメージは外骨格である。全体のhtmlの枠組みのみ持ち、"
+                              +"そこへ各機能モジュールを割り当てる。そして機能モジュール間の調停をする。"
+                            +"</li>"
+                            +"<li>"
+                              +"kadai.acct:機能モジュール。アカウント部のUI処理を受け持つ。"
+                            +"</li>"
+                            +"<li>"
+                              +"kadai.login:機能モジュール。ログイン画面のUI処理を受け持つ。"
+                            +"</li>"
+                            +"<li>"
+                              +"kadai.XXX:画面(機能)を増やすと機能モジュールは増えてゆくはず・・・"
+                            +"</li>"
+                            +"<li>"
+                              +"kadai.model:モデル。データの管理はここで行う。逆に機能モジュールでは"
+                              +"機能モジュールをまたぐようなデータを保持してはいけない。表示や通信は行わない。"
+                            +"</li>"
+                            +"<li>"
+                              +"kadai.data:サーバとの通信処理はここで行う。dummyFlgをたてると"
+                              +"通信をせずに、通信処理を模倣して上位にそれらしい返事をする。(結果システムがそこそこ動く)"
+                            +"</li>"
+                            +"<li>"
+                              +"kadai.util:汎用ユーティリティー。ブラウザが無くても動く。"
+                            +"</li>"
+                            +"<li>"
+                              +"kadai.util_b:汎用ユーティリティー。ブラウザがいる仮定で動く。"
+                            +"</li>"
+                          +"</ul>";
+        </script>
+      </li>
       <li>サーバ：app.jsとlibフォルダ以下のすべて。</li>
+      <p Id="server">+</p>
+      <script>
+        serverContents = "<ul>"
+                          +"<li>"
+                            +"app.js:サーバは認証とデータの保持のみ行う。よってロジックの大部分はクライアントにあるはず。"
+                            +"主にクライアントからの要求を受け、必要なデータを返す。"
+                          +"</li>"
+                          +"<li>"
+                            +"database.js:mongoDBへのアクセスはここを介して行う。"
+                          +"</li>"
+                          +"<li>"
+                            +"crypt.js:サーバ側のユーティリティ。ハッシュ処理を行う。"
+                          +"</li>"
+                        +"</ul>";
+      </script>
       <li>データ準備：readyData.jsとdata2DBフォルダ以下のすべて。</li>
     </ul>
 
@@ -43,9 +134,26 @@
         <div class="mermaid">
           sequenceDiagram
             participant u  as ユーザ
+            participant b  as ブラウザ
+            participant sh as kadai.shell
+            participant a  as kadai.acct
+            participant m  as kadai.model
+            participant d  as kadai.data
+            participant g  as jquery.event.gevent
             participant sv as サーバ
-            u->>sv: ブラウザで該当URLにアクセス
-            sv->>u: public/kadai.htmlを送る
+            u->>b: ブラウザで該当URLにアクセス
+            b->>sv: get
+            sv->>b: public/kadai.htmlを送る
+            b->>b: css,javascript の読み込み
+            b->>m: 初期化
+            m->>d: コールバックの登録
+            d->>m: 登録
+            b->>sh: 初期化
+            sh->>g: グローバルカスタムイベントの登録
+            g->>sh: 登録
+            sh->>a: 初期化
+            a->>sh: コンテンツ(html)の設定
+            sh->>b: 画面表示
         </div>
       </li>
       <li>ログインするボタン押下
@@ -56,7 +164,7 @@
             participant a  as kadai.acct
             participant m  as kadai.model
             participant l  as kadai.login
-            participant an as uriAnchor
+            participant an as jquery.uriAnchor
             participant b  as ブラウザ
             u->>a: ログインするボタンを押す
             a->>m: ログイン中かどうか判定
