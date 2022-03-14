@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="css/kadai.css">
     <link rel="stylesheet" href="css/kadai.shell.css">
     <link rel="stylesheet" href="css/kadai.login.css">
+    <link rel="stylesheet" href="css/kadai.memo.css">
     <link rel="stylesheet" href="css/kadai.calendar.css"><!--画面が増えたらここに追加-->
 
     <!--サードパーティーjavascript-->
@@ -29,12 +30,30 @@
     <script type="text/javascript" src="js/kadai.login.js"></script>
     <script type="text/javascript" src="js/kadai.calendar.js"></script>
     <script type="text/javascript" src="js/kadai.input.js"></script><!--画面が増えたらここに追加-->
+    <script type="text/javascript" src="js/kadai.storage.js"></script><!--ログインを記憶-->
+    <script type="text/javascript" src="js/kadai.alert.js"></script><!--推奨環境かの識別-->
+    <script type="text/javascript" src="js/kadai.firstvisit.js"></script><!--始めてきましたか？-->
+    <script type="text/javascript" src="js/kadai.memo.js"></script><!--メモする-->
     <script>
       $(function () { kadai.initModule( $('#kadai') ); });
     </script>
+    <noscript>
+      <h1>JavaScriptがオフになっています</h1>
+      <p>このソフトウェアは、JavaScriptを使用します。JavaScriptをオンにして、もう一度お試しください。</p>
+    </noscript>
   </head>
 
   <body>
     <div id='kadai'></div>
+    <div id='memo'>
+      <button class="kadai-memo" onClick="memo">
+    <img src="img/memo.jpeg" class="kadai-memo">
+    </button>
+    <script>
+      function memo(){
+        anchor_map.status = 'memo';
+      }
+    </script>
+    </div>
   </body>
 </html>
