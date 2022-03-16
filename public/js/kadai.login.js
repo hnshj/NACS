@@ -2,6 +2,29 @@
  * kadai.login.js
  * ログイン画面モジュール
  */
+
+//ブラウザが対応しているかどうか
+var userAgent = window.navigator.userAgent.toLowerCase();
+var caution = [];
+if(userAgent.indexOf('msie') != -1 ||
+        userAgent.indexOf('trident') != -1) {
+   window.alert("InternetExplorerは推奨環境ではありません。\n\rプログラムが正常に機能しない可能性があります。");
+} else if(userAgent.indexOf('edge') != -1) {
+    caution = "ご利用中のブラウザ、MicrosoFtEdgeは推奨環境ではありません。";
+} else if(userAgent.indexOf('chrome') != -1) {
+    caution = "ご利用中のブラウザ、GoogleChromeは推奨環境ではありません。";
+} else if(userAgent.indexOf('safari') != -1) {
+} else if(userAgent.indexOf('firefox') != -1) {
+    window.alert("FireFoxは推奨環境ではありません。\n\rプログラムが正常に機能しない可能性があります。");
+} else if(userAgent.indexOf('opera') != -1) {
+    window.alert("Operaは推奨環境ではありません。\n\rプログラムが正常に機能しない可能性があります。");
+} else {
+    window.alert("ご使用のブラウザは推奨環境ではありません。\n\rプログラムが正常に機能しない可能性があります。");
+}
+
+
+
+
 kadai.login = (function () {
   'use strict';
 
@@ -11,17 +34,23 @@ kadai.login = (function () {
           + '<div class="kadai-login-username-title">'
             + '<p>ユーザID</p>'
           + '</div>'
-          + '<input type="text" class="kadai-login-username-textbox">'
+          + '<input type="text" class="kadai-login-username-textbox" class="id" value="hoge">'
           + '<div class="kadai-login-passward-title">'
-            + '<p>password</p>'
+            + '<p>パスワード</p>'
           + '</div>'
-          + '<input type="password" class="kadai-login-passward-textbox">'
+          + '<input type="password" class="kadai-login-passward-textbox" class="pass" value="hogehoge">'
           + '<button class="kadai-login-button-ok">'
-            + '<p>ok</p>'
+            + '<p>ログイン</p>'
           + '</button>'
           + '<button class="kadai-login-button-cancel">'
-            + '<p>cancel</p>'
-          + '</button>',
+            + '<p>キャンセル</p>'
+          + '</button>'
+          +'<div class="copyright" onclick="hp()">'
+          +'<p>Copyright © 2022 NACS All Rights Reserved.</p>'
+          +'</div>'
+          +'<div class="caution">'
+          + caution
+          +'</div>',
         settable_map : {}
       },
       stateMap = {
@@ -55,6 +84,15 @@ kadai.login = (function () {
     $.gevent.publish('loginCancel', [{}]);
     return false;
   }
+
+  document.addEventListener('keypress', keypress_ivent);
+function keypress_ivent(e) {
+  console.log("Enter");
+	 kadai.model.login({userId:jqueryMap.$usernameTextbox.val(),
+    passWord:jqueryMap.$PasswordTextbox.val()});
+	return false; 
+}
+
 
   //---ユーティリティメソッド---
 
