@@ -43,7 +43,7 @@
 .kadai-login-button-ok{
   top    : 260px;
   left   : 40px;
-  width  : 130px;
+  width  : 260px;
   line-height: 40px;
   font-size: 35px;
   border-radius: 8px;
@@ -51,13 +51,13 @@
   background-color: #E6E6FA;
 }
 .kadai-login-button-ok:hover{
-  background-color: red;
+  background-color: rgb(250, 248, 161);
 }
 
 .kadai-login-button-cancel{
   top    : 260px;
-  left   : 220px;
-  width  : 130px;
+  left   : 330px;
+  width  : 260px;
   line-height : 40px;
   font-size: 35px;
   border-radius: 8px;
@@ -65,5 +65,23 @@
   background-color: #E6E6FA;
 }
 .kadai-login-button-cancel:hover{
-  background-color: red;
+  background-color: rgb(250, 248, 161);
+}
+
+.copyright{
+  top:400px;
+  font-size:20px;
+  color:white;
+  background-color:coral;
+}
+
+.caution{
+  top:200px;
+  font-size:30px;
+  color:white;
+  background-color:blue;
+}
+
+.a{
+  text-decoration: none;
 }

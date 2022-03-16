@@ -1,0 +1,15 @@
+kadai-memo{
+  width:15px;
+  height: 15px;
+  background-color: #2779bd;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+  border-radius: 50%;
+  cursor: pointer;
+  
+  position: absolute;
+  top: 0;
+  left: 0;
+  }

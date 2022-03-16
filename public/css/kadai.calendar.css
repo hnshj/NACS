@@ -20,7 +20,7 @@
   background-color: #E6E6FA;
 }
 .kadai-calendar-previousWeek:hover{
-  background-color: red;
+  background-color: rgb(250, 248, 161);
 }
 
 .kadai-calendar-back {
@@ -34,7 +34,7 @@
   background-color: #E6E6FA;
 }
 .kadai-calendar-back:hover{
-  background-color: red;
+  background-color: rgb(250, 248, 161);
 }
 
 .kadai-calendar-nextWeek {
@@ -48,7 +48,7 @@
   background-color: #E6E6FA;
 }
 .kadai-calendar-nextWeek:hover{
-  background-color: red;
+  background-color: rgb(250, 248, 161);
 }
 
 .kadai-calendar-main {
@@ -61,4 +61,93 @@
 .kadai-calendar-main th, .kadai-calendar-main tr, .kadai-calendar-main td {
   font-size: 20px;
   border : 1px solid black;
+}
+
+.kadai-input-title{
+  top    : 140px;
+  left   : 20px;
+  right  : 20px;
+  font-size: 30px;
+}
+
+.kadai-input-contents-title {
+  top    : 140px;
+  left   : 20px;
+  right  : 20px;
+  font-size: 25px;
+}
+
+.kadai-input-kyouka-title{
+  top    : 140px;
+  left   : 20px;
+  right  : 20px;
+  font-size: 25px;
+}
+
+.kadai-input-kyouka-textbox {
+  top    : 40px;
+  left   : 20px;
+  right  : 20px;
+  font-size: 25px;
+}
+
+.kadai-input-contents-textbox {
+  top    : 40px;
+  left   : 20px;
+  right  : 20px;
+  font-size: 25px;
+}
+
+.kadai-input-button-ok{
+  top    : 10px;
+  left   : 10px;
+  width  : 150px;
+  height : 40px;
+  font-size: 25px;
+  border-radius: 8px;
+  cursor: pointer;
+  background-color: #E6E6FA;
+}
+.kadai-input-button-ok:hover{
+  background-color: rgb(250, 248, 161);
+}
+
+.kadai-input-button-cancel{
+  top    : 10px;
+  left   : 180px;
+  width  : 150px;
+  height : 40px;
+  font-size: 25px;
+  border-radius: 8px;
+  cursor: pointer;
+  background-color: #E6E6FA;
+}
+.kadai-input-button-cancel:hover{
+  background-color: rgb(250, 248, 161);
+}
+
+.kadai-input-button-remove{
+  top    : 10px;
+  left   : 350px;
+  width  : 150px;
+  height : 40px;
+  font-size: 25px;
+  border-radius: 8px;
+  cursor: pointer;
+  background-color: #E6E6FA;
+}
+.kadai-input-button-remove:hover{
+  background-color: rgb(250, 248, 161);
+}
+
+.sun{
+  color : red;
+}
+
+.sat{
+  color : blue;
+}
+
+.day{
+  text-align: center;
 }
