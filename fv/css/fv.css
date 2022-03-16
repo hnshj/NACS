@@ -1,0 +1,23 @@
+body{
+    font-family: sans-serif;
+}
+
+.titlemain {
+    font-size: 50px;
+  }
+
+.progress{
+ font-size: 30px;
+}
+
+.title {
+    font-size: 30px;
+  }
+
+.contents {
+    font-size: 20px;
+  }
+
+.kiyaku{
+    font-size: 20px;
+  }
