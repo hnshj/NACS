@@ -18,14 +18,15 @@ kadai.input = (function () {
             + '<p>教科</p>'
           + '</div>'
           + '<input type="text" class="kadai-input-kyouka-textbox">'
+          + '<br><br>'
           + '<button class="kadai-input-button-ok">'
-            + '<p>ok</p>'
+            + '<p>追加</p>'
           + '</button>'
           + '<button class="kadai-input-button-cancel">'
-            + '<p>cancel</p>'
+            + '<p>キャンセル</p>'
           + '</button>'
           + '<button class="kadai-input-button-remove">'
-            + '<p>この課題を削除</p>'
+            + '<p>削除</p>'
           + '</button>',
         settable_map : { year     : true,
                          month    : true,

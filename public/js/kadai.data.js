@@ -46,6 +46,15 @@ kadai.data = (function () {
                     name     : "鈴木" };
 
             dummyLoginFlg = true;
+          } else if (targetObj.userId == 'hoge' && targetObj.passWord == 'hogehoge') {
+            obj = { result   : true,
+                    userId   : targetObj.userId,
+                    token    : 'this is token',
+                    gakunen  : 2,
+                    cls      : 4,
+                    name     : "hoge hogeo" };
+
+            dummyLoginFlg = true;
           } else {
             obj = { result   : false };
           }

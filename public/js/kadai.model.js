@@ -39,6 +39,7 @@ kadai.model = (function () {
       // ログイン失敗
       } else {
         $.gevent.publish('loginFailure', [msg]);
+        window.alert("ログインに失敗しました")
       }
     });
 

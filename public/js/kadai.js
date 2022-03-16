@@ -12,3 +12,7 @@ let kadai = (function () {
 
   return { initModule : initModule };
 }());
+
+function hp(){
+  window.location.href = "#";
+}
