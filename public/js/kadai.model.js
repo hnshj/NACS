@@ -40,6 +40,7 @@ kadai.model = (function () {
       } else {
         $.gevent.publish('loginFailure', [msg]);
         window.alert("ログインに失敗しました")
+        var alarm="ログインに失敗しました。"
       }
     });
 

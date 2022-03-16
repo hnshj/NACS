@@ -50,6 +50,9 @@ kadai.login = (function () {
           +'</div>'
           +'<div class="caution">'
           + caution
+          +'</div>'
+          +'<div class="alarm">'
+          +alarm
           +'</div>',
         settable_map : {}
       },
