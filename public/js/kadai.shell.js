@@ -36,7 +36,8 @@ kadai.shell = (function () {
       + '<div class="kadai-shell-main">'
       + '</div>',
     titleStr : String()
-      + 'hamamatsu nittai kadai kanri'
+    + 'NACS&emsp;ULTRA'
+      //+ '<img src="img/NACSlogo1.jpg" height="40" width="40">'
     },
     stateMap = {
       $container : null,
@@ -117,6 +118,10 @@ kadai.shell = (function () {
 
       kadai.input.initModule( jqueryMap.$main );
 
+      //メモの場合
+      }else if( anchor_map.status == 'memo'){
+      kadai.memo.initModule( jqueryMap.$main);
+      
     // ログアウトの場合
     } else if ( anchor_map.status == 'matiuke' ) {
       kadai.calendar.removeCalendar();
