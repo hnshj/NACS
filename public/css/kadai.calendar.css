@@ -56,6 +56,7 @@
   left   : 10px;
   border-collapse:collapse;
   background : #DFC0E0;
+  margin:auto;
 }
 
 .kadai-calendar-main th, .kadai-calendar-main tr, .kadai-calendar-main td {
