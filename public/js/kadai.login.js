@@ -22,7 +22,26 @@ if(userAgent.indexOf('msie') != -1 ||
     window.alert("ご使用のブラウザは推奨環境ではありません。\n\rプログラムが正常に機能しない可能性があります。");
 }
 
+//名言
+var random = Math.floor( Math.random() * 11 );
+var meigen = "What's up?"
 
+if (random == 0){
+    meigen = "If today were the last day of my life, would I want to do what I am about to do today?";
+} else if (random == 1){
+    meigen = "I'm a very big believer in equal opportunity as opposed to equal outcome.";
+} else if (random == 2){
+    meigen = "It's only by saying no that you can concentrate on the things that are really important.";
+} else if(random == 3){
+  meigen = "Intel入ってる";
+} else if(random=4){
+ meigen = "べちょーん";
+} else {
+    meigen = "Stay hungry, Stay foolish.";
+}
+
+console.log(random);
+console.log(meigen);
 
 
 kadai.login = (function () {
@@ -48,11 +67,19 @@ kadai.login = (function () {
           +'<div class="copyright" onclick="hp()">'
           +'<p>Copyright © 2022 NACS All Rights Reserved.</p>'
           +'</div>'
-          +'<div class="caution">'
+          +'<div class="caution" align="center">'
           + caution
           +'</div>'
           +'<div class="alarm">'
-          +alarm
+         // +alarm
+          +'</div>'
+          //名言
+          +'<div class="other" align="center">'
+          +'<b>'
+          //+'<span id="meigen">'
+          //+'</span>'
+          + meigen
+          +'</b>'
           +'</div>',
         settable_map : {}
       },

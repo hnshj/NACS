@@ -36,7 +36,7 @@ kadai.shell = (function () {
       + '<div class="kadai-shell-main">'
       + '</div>',
     titleStr : String()
-    + 'NACS'
+    + '<strong>NACS</strong>'
       //+ '<img src="img/NACSlogo1.jpg" height="40" width="40">'
     },
     stateMap = {
