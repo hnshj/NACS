@@ -5,20 +5,21 @@
 
  .kadai-login-username-title, .kadai-login-username-textbox,
  .kadai-login-passward-title, .kadai-login-passward-textbox,
- .kadai-login-button-ok, .kadai-login-button-cancel
+ .kadai-login-button-ok, .kadai-login-button-cancel,
+ .copyright, .caution ,.other
  {
    position: absolute;
  }
 
 .kadai-login-username-title {
-  top    : 120px;
+  top    : 60px;
   left   : 20px;
   right  : 20px;
   font-size: 25px;
 }
 
 .kadai-login-username-textbox {
-  top    : 160px;
+  top    : 100px;
   left   : 20px;
   height : 40px;
   width: 280px;
@@ -26,14 +27,14 @@
 }
 
 .kadai-login-passward-title {
-  top    : 220px;
+  top    : 160px;
   left   : 20px;
   right  : 20px;
   font-size: 25px;
 }
 
 .kadai-login-passward-textbox {
-  top    : 260px;
+  top    : 200px;
   left   : 20px;
   height : 40px;
   width: 280px;
@@ -41,7 +42,7 @@
 }
 
 .kadai-login-button-ok{
-  top    : 320px;
+  top    : 260px;
   left   : 40px;
   width  : 260px;
   line-height: 40px;
@@ -55,7 +56,7 @@
 }
 
 .kadai-login-button-cancel{
-  top    : 320px;
+  top    : 260px;
   left   : 330px;
   width  : 260px;
   line-height : 40px;
@@ -69,14 +70,15 @@
 }
 
 .copyright{
-  top:400px;
+  top:340px;
+  left : 100px;
   font-size:20px;
   color:white;
   background-color:coral;
 }
 
 .caution{
-  top:500px;
+  top:360px;
   left   : 330px;
   line-height : 40px;
   font-size:30px;
@@ -85,8 +87,8 @@
 }
 
 .other{
-  top:500px;
-  left   : 330px;
+  top:10px;
+  left   : 20px;
   line-height : 40px;
   font-size:30px;
   color:white;

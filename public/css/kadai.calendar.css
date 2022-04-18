@@ -4,7 +4,9 @@
  */
 
  .kadai-calendar-previousWeek, .kadai-calendar-back,
- .kadai-calendar-nextWeek, .kadai-calendar-main
+ .kadai-calendar-nextWeek, .kadai-calender-schedule,
+ .kadai-calendar-main
+
  {
    position: absolute;
  }
@@ -51,9 +53,9 @@
   background-color: rgb(250, 248, 161);
 }
 
-.kadai-schedule {
+.kadai-calender-schedule {
   top : 10px;
-  left : 350px;
+  left : 520px;
   width : 150px;
   height : 40px;
   font-size: 25px;
@@ -69,12 +71,12 @@
   top    : 70px;
   left   : 10px;
   border-collapse:collapse;
-  background : #DFC0E0;
+  background : #afffaf;
   margin:auto;
 }
 
 .kadai-calendar-main th, .kadai-calendar-main tr, .kadai-calendar-main td {
-  font-size: 20px;
+  font-size: 40px;
   border : 1px solid black;
 }
 

@@ -11,7 +11,7 @@ kadai.calendar = (function () {
           + '<button class="kadai-calendar-previousWeek">前の週</button>'
           + '<button class="kadai-calendar-back">今週へ戻る</button>'
           + '<button class="kadai-calendar-nextWeek">次の週</button>'
-          + '<button class="kadai-schedule">時間割</button>'
+          + '<button class="kadai-calender-schedule">時間割</button>'
           + '<table class="kadai-calendar-main"></table>',
         tHeader : String()
           + '<tr class="day"><td>曜日</td>'
