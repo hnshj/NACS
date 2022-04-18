@@ -113,6 +113,7 @@ kadai.login = (function () {
     return false;
   }
 
+  /*
   document.addEventListener('keypress', keypress_ivent);
 function keypress_ivent(e) {
   console.log("Enter");
@@ -120,7 +121,7 @@ function keypress_ivent(e) {
     passWord:jqueryMap.$PasswordTextbox.val()});
 	return false; 
 }
-
+*/
 
   //---ユーティリティメソッド---
 
