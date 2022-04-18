@@ -51,6 +51,20 @@
   background-color: rgb(250, 248, 161);
 }
 
+.kadai-schedule {
+  top : 10px;
+  left : 350px;
+  width : 150px;
+  height : 40px;
+  font-size: 25px;
+  cursor: pointer;
+  border-radius: 8px;
+  background-color: #E6E6FA;
+}
+.kadai-calendar-nextWeek:hover{
+  background-color: rgb(250, 248, 161);
+}
+
 .kadai-calendar-main {
   top    : 70px;
   left   : 10px;

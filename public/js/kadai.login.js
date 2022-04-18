@@ -12,7 +12,7 @@ if(userAgent.indexOf('msie') != -1 ||
 } else if(userAgent.indexOf('edge') != -1) {
     caution = "ご利用中のブラウザ、MicrosoFtEdgeは推奨環境ではありません。";
 } else if(userAgent.indexOf('chrome') != -1) {
-    caution = "ご利用中のブラウザ、GoogleChromeは推奨環境ではありません。";
+    //caution = "ご利用中のブラウザ、GoogleChromeは推奨環境ではありません。";
 } else if(userAgent.indexOf('safari') != -1) {
 } else if(userAgent.indexOf('firefox') != -1) {
     window.alert("FireFoxは推奨環境ではありません。\n\rプログラムが正常に機能しない可能性があります。");
@@ -34,8 +34,6 @@ if (random == 0){
     meigen = "It's only by saying no that you can concentrate on the things that are really important.";
 } else if(random == 3){
   meigen = "Intel入ってる";
-} else if(random=4){
- meigen = "べちょーん";
 } else {
     meigen = "Stay hungry, Stay foolish.";
 }
