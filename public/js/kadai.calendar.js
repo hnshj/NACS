@@ -11,7 +11,8 @@ kadai.calendar = (function () {
           + '<button class="kadai-calendar-previousWeek">前の週</button>'
           + '<button class="kadai-calendar-back">今週へ戻る</button>'
           + '<button class="kadai-calendar-nextWeek">次の週</button>'
-          + '<button class="kadai-calender-schedule">時間割</button>'
+          + '<button class="kadai-calendar-schedule">時間割</button>'
+          + '<button class="kadai-calendar-memo">メモ</button>'
           + '<table class="kadai-calendar-main"></table>',
         tHeader : String()
           + '<tr class="day"><td>曜日</td>'
@@ -41,7 +42,7 @@ kadai.calendar = (function () {
       },
       jqueryMap = {},
       setJqueryMap, configModule, initModule, removeCalendar,
-      onPrevious, onBack, onNext, createTable;
+      onPrevious, onBack, onNext, onSchedule, onMemo, createTable;
 
   //---DOMメソッド---
   setJqueryMap = function () {
@@ -51,6 +52,8 @@ kadai.calendar = (function () {
       $previousWeek: $container.find( '.kadai-calendar-previousWeek' ),
       $back        : $container.find( '.kadai-calendar-back' ),
       $nextWeek    : $container.find( '.kadai-calendar-nextWeek' ),
+      $schedule    : $container.find( '.kadai-calendar-schedule' ),
+      $memo        : $container.find( '.kadai-calendar-memo' ),
       $main        : $container.find( '.kadai-calendar-main' )
     };
   }
@@ -87,6 +90,16 @@ kadai.calendar = (function () {
     $.gevent.publish('changeCalendar', [obj]);
   }
 
+  onSchedule = function(){
+    //時間割を表示する
+    window.alert("JIKANWARI");
+  }
+
+  onMemo = function () {
+    //memo
+    window.alert("MEMO");
+  }
+
   //---ユーティリティメソッド---
   createTable = function () {
 
@@ -101,7 +114,8 @@ kadai.calendar = (function () {
         };
 
     jqueryMap.$main.append(configMap.tHeader);
-
+    
+    str = '<table id="calendar">'
     for (j = 0; j < 4; j++) {
       weeks = kadai.util.getWeek(configMap.year,
                                configMap.month-1, //月だけ0始まり
@@ -151,7 +165,7 @@ kadai.calendar = (function () {
       }
     str += '</td>'
     }
-
+    str += '</table>'
     jqueryMap.$main.append(str);
     }
   }
@@ -181,11 +195,14 @@ kadai.calendar = (function () {
 
     // 空白セルをクリックしたら、入力画面へ
     $(document).on('click', '.' + configMap.tblankClassName, function (event) {
+      //document.getElementById();
       let weeks = kadai.util.getWeek(configMap.year,
                                      configMap.month-1, //月だけ0始まり
                                      configMap.day),
           retusIndex = this.cellIndex;
-
+           //ここから先のプログラムは、行を引き当てるため
+          //var dan = HTMLTableElement.rows.length;
+      //if (dan == 0){
       // -1は左端に「課題」のセルがある分の補正
       $.gevent.publish('inputKadai', [ { year     : weeks[retusIndex-1].year,
                                          month    : weeks[retusIndex-1].month,
@@ -193,6 +210,7 @@ kadai.calendar = (function () {
                                          kadaiId  : "",
                                          contents : "",
                                          kyouka   : "" } ]);
+      //}
     });
 
     // 課題を追加をクリックしたら、入力画面へ
@@ -234,7 +252,10 @@ kadai.calendar = (function () {
       .click( onBack );
     jqueryMap.$nextWeek
       .click( onNext );
-
+    jqueryMap.$schedule
+      .click( onSchedule );
+    jqueryMap.$memo
+      .click( onMemo );
     return true;
   }
 
@@ -245,6 +266,8 @@ kadai.calendar = (function () {
         jqueryMap.$previousWeek.remove();
         jqueryMap.$back.remove();
         jqueryMap.$nextWeek.remove();
+        jqueryMap.$schedule.remove();
+        jqueryMap.$memo.remove();
         jqueryMap.$main.remove();
       }
     }

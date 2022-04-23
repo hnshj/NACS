@@ -6,7 +6,7 @@
  .kadai-login-username-title, .kadai-login-username-textbox,
  .kadai-login-passward-title, .kadai-login-passward-textbox,
  .kadai-login-button-ok, .kadai-login-button-cancel,
- .copyright, .caution ,.other
+ .copyright, .caution, .other, .a
  {
    position: absolute;
  }
