@@ -97,7 +97,8 @@ kadai.calendar = (function () {
 
   onMemo = function () {
     //memo
-    window.alert("MEMO");
+    $.gevent.publish('memo');
+    window.alert("memo")
   }
 
   //---ユーティリティメソッド---

@@ -68,13 +68,13 @@
 }
 
 .kadai-calendar-memo {
-  top : 10px;
-  left : 690px;
-  width : 150px;
-  height : 40px;
+  top : 550px;
+  left : 750px;
+  width : 70px;
+  height : 70px;
   font-size: 25px;
   cursor: pointer;
-  border-radius: 8px;
+  border-radius: 100px;
   background-color: #E6E6FA;
 }
 .kadai-calendar-memo:hover{

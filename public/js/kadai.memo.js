@@ -19,7 +19,36 @@ kadai.memo = (function (){
         + '<button id="eraser-button">消しゴムモード</button>'
         + '</div>'
         + '<script src="./memo.js"></script>'
-    }
+    },
+    stateMap = {
+      $container : null,
+    },
+    jqueryMap = {},
+    setJqueryMap, configModule, initModule, onMemo;
+
+     //---DOMメソッド---
+  setJqueryMap = function () {
+    let $container = stateMap.$container;
+    jqueryMap = {
+      $container   : $container
+    };
+  }
+
+
+    //---パブリックメソッド---
+  configModule = function ( input_map ) {
+    kadai.util.setConfigMap({
+      input_map : input_map,
+      config_map : configMap
+    });
+    return true;
+  }
+
+  initModule = function ( $container ) {
+    $container.html( configMap.main_html );
+    stateMap.$container = $container;
+    setJqueryMap();
+  }
 
     //メモ用プログラム
     // ページの読み込みが完了したらコールバック関数が呼ばれる
@@ -125,16 +154,7 @@ window.addEventListener('load', () => {
     // イベント処理を初期化する
     initEventHandler();
   });
-
-  
-
-    //---DOMメソッド---
-    setJqueryMap =function() {
-        let $container = stateMap.$container;
-        jqueryMap = {
-            $container : $container,
-            $memo : $container.find( '.kadai-memo')
-        };
-        }
     }
 )
+
+

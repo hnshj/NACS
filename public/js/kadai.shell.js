@@ -11,6 +11,7 @@ kadai.shell = (function () {
       status : {matiuke         : true, //従属変数なし
                 login           : true, //従属変数なし
                 calendar        : true,
+                memo            : true,
                 input           : true
               },
       _status : {
@@ -242,6 +243,13 @@ kadai.shell = (function () {
           contents : msg_map.contents,
           kyouka   : msg_map.kyouka
         }
+      });
+    });
+
+    //メモ
+    $.gevent.subscribe( $container, 'memo', function (event, msg_map) {
+      changeAnchorPart({
+        status : 'memo',
       });
     });
 
