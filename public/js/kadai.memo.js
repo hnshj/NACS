@@ -2,21 +2,27 @@
  *kadai.memo.js
  *メモ表示モジュール
  */
-kadai.memo = (function (){
+kadai.memodx = (function (){
     'user strict';
+
+    console.log('intel haitteru');
 
     //---モジュールスコープ変数---
     let configMap = {
         main_html : String()
+        + '<button class="kadai-memo-calendar">課題</button>'
+        + '<button class="kadai-memo-schedule">時間割</button>'
         + '<canvas'
         + 'id="draw-area"'
+        + 'top="100px"'
+        + 'left="10px"'
         + 'width="1000px"'
         + 'height="500px"'
         + 'style="border: 1px solid #000000;">'
         + '</canvas>'
         + '<div>'
-        + '<button id="clear-button">全消し</button>'
-        + '<button id="eraser-button">消しゴムモード</button>'
+        + '<button id="clear-button" class="clear-button">全消し</button>'
+        + '<button id="eraser-button" class="eraser-button">消しゴム</button>'
         + '</div>'
         + '<script src="./memo.js"></script>'
     },
@@ -24,16 +30,41 @@ kadai.memo = (function (){
       $container : null,
     },
     jqueryMap = {},
-    setJqueryMap, configModule, initModule, onMemo;
+    setJqueryMap, configModule, initModule, onCalendar, onSchedule;
 
      //---DOMメソッド---
   setJqueryMap = function () {
     let $container = stateMap.$container;
     jqueryMap = {
-      $container   : $container
+      $container   : $container,
+      $calendar    : $container.find( '.kadai-memo-calendar' ),
+      $schedule    : $container.find( '.kadai-memo-schedule' )
     };
   }
 
+
+  //---イベントハンドラ---
+  onCalendar = function () {
+    let day = new Date(), obj;
+
+    obj = { year  : day.getFullYear(),
+      month : day.getMonth() + 1, //月だけ0始まり
+      day   : day.getDate()};
+    $.gevent.publish('changeCalendar', [obj]);
+
+    window.alert("calendar");
+  }
+
+  onSchedule = function () {
+    let day = new Date(), obj;
+
+    obj = { year  : day.getFullYear(),
+      month : day.getMonth() + 1, //月だけ0始まり
+      day   : day.getDate()};
+    $.gevent.publish('schedule', [obj]);
+
+    window.alert("schedule");
+  }
 
     //---パブリックメソッド---
   configModule = function ( input_map ) {
@@ -153,8 +184,21 @@ window.addEventListener('load', () => {
   
     // イベント処理を初期化する
     initEventHandler();
+
+
+  jqueryMap.$calendar
+    .click( onCalendar );
+  jqueryMap.$memo
+    .click( onMemo );
+  return true;
   });
-    }
-)
+    
 
 
+
+return {
+  configModule  : configModule,
+  initModule    : initModule
+};
+
+}());

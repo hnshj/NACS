@@ -12,6 +12,7 @@ kadai.shell = (function () {
                 login           : true, //従属変数なし
                 calendar        : true,
                 memo            : true,
+                schedule        : true,
                 input           : true
               },
       _status : {
@@ -119,10 +120,14 @@ kadai.shell = (function () {
 
       kadai.input.initModule( jqueryMap.$main );
 
-      //メモの場合
-      }else if( anchor_map.status == 'memo'){
-      kadai.memo.initModule( jqueryMap.$main);
-      
+    //メモの場合
+    }else if( anchor_map.status == 'memo'){
+      kadai.memodx.initModule( jqueryMap.$main);
+    
+    //時間割の場合
+    }else if( anchor_map.status == 'schedule'){
+      kadai.schedule.initModule( jqueryMap.$main);
+
     // ログアウトの場合
     } else if ( anchor_map.status == 'matiuke' ) {
       kadai.calendar.removeCalendar();
@@ -250,6 +255,18 @@ kadai.shell = (function () {
     $.gevent.subscribe( $container, 'memo', function (event, msg_map) {
       changeAnchorPart({
         status : 'memo',
+      });
+    });
+
+    //時間割
+    $.gevent.subscribe( $container, 'schedule', function (event, msg_map) {
+      changeAnchorPart({
+        status : 'schedule',
+        _status : {
+          year  : msg_map.year,
+          month : msg_map.month,
+          day   : msg_map.day
+        }
       });
     });
 

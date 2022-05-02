@@ -8,10 +8,10 @@ kadai.schedule = (function () {
   //---モジュールスコープ変数---
   let configMap = {
         main_html : String()
-          + '<button class="kadai-calendar-previousWeek">前の週</button>'
-          + '<button class="kadai-calendar-back">今週へ戻る</button>'
-          + '<button class="kadai-calendar-nextWeek">次の週</button>'
-          + '<table class="kadai-calendar-main"></table>',
+          + '<button class="kadai-schedule-previousWeek">前の週</button>'
+          + '<button class="kadai-schedule-back">今週へ戻る</button>'
+          + '<button class="kadai-schedule-nextWeek">次の週</button>'
+          + '<table class="kadai-schedule-main"></table>',
         tHeader : String()
           + '<tr class="day"><td>曜日</td>'
           + '<td class="sun" class="day">日</td>'
@@ -47,10 +47,10 @@ kadai.schedule = (function () {
     let $container = stateMap.$container;
     jqueryMap = {
       $container   : $container,
-      $previousWeek: $container.find( '.kadai-calendar-previousWeek' ),
-      $back        : $container.find( '.kadai-calendar-back' ),
-      $nextWeek    : $container.find( '.kadai-calendar-nextWeek' ),
-      $main        : $container.find( '.kadai-calendar-main' )
+      $previousWeek: $container.find( '.kadai-schedule-previousWeek' ),
+      $back        : $container.find( '.kadai-schedule-back' ),
+      $nextWeek    : $container.find( '.kadai-schedule-nextWeek' ),
+      $main        : $container.find( '.kadai-schedule-main' )
     };
   }
 

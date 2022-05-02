@@ -5,7 +5,8 @@
 
  .kadai-calendar-previousWeek, .kadai-calendar-back,
  .kadai-calendar-nextWeek, .kadai-calendar-schedule,
- .kadai-calendar-memo,.kadai-calendar-main
+ .kadai-calendar-memo,.kadai-calendar-calendar,
+ .kadai-calendar-main
 
  {
    position: absolute;
@@ -74,7 +75,7 @@
   height : 70px;
   font-size: 25px;
   cursor: pointer;
-  border-radius: 100px;
+  border-radius: 35px;
   background-color: #E6E6FA;
 }
 .kadai-calendar-memo:hover{

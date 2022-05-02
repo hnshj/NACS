@@ -92,7 +92,8 @@ kadai.calendar = (function () {
 
   onSchedule = function(){
     //時間割を表示する
-    window.alert("JIKANWARI");
+    $.gevent.publish('schedule')
+    window.alert("schedule")
   }
 
   onMemo = function () {
