@@ -38,8 +38,7 @@ if (random == 0){
     meigen = "Stay hungry, Stay foolish.";
 }
 
-console.log(random);
-console.log(meigen);
+
 
 
 kadai.login = (function () {

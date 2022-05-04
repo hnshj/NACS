@@ -126,6 +126,9 @@ kadai.shell = (function () {
     
     //時間割の場合
     }else if( anchor_map.status == 'schedule'){
+      /*kadai.schedule.configModule({ year  : anchor_map._status.year,
+        month : anchor_map._status.month,
+        day   : anchor_map._status.day });*/
       kadai.schedule.initModule( jqueryMap.$main);
 
     // ログアウトの場合
@@ -262,11 +265,11 @@ kadai.shell = (function () {
     $.gevent.subscribe( $container, 'schedule', function (event, msg_map) {
       changeAnchorPart({
         status : 'schedule',
-        _status : {
+        /*_status : {
           year  : msg_map.year,
           month : msg_map.month,
           day   : msg_map.day
-        }
+        }*/
       });
     });
 

@@ -92,6 +92,11 @@ kadai.calendar = (function () {
 
   onSchedule = function(){
     //時間割を表示する
+    let day = new Date(), obj;
+
+    obj = { year  : day.getFullYear(),
+            month : day.getMonth() + 1, //月だけ0始まり
+            day   : day.getDate()};
     $.gevent.publish('schedule')
     window.alert("schedule")
   }
@@ -198,6 +203,10 @@ kadai.calendar = (function () {
     // 空白セルをクリックしたら、入力画面へ
     $(document).on('click', '.' + configMap.tblankClassName, function (event) {
       //document.getElementById();
+      let tateIndex = $(this).closest('tr').index(), // ヘッダが1行で、0始まりだから1から
+       temp = $(this).text();
+      
+      if (tateIndex == 2){
       let weeks = kadai.util.getWeek(configMap.year,
                                      configMap.month-1, //月だけ0始まり
                                      configMap.day),
@@ -208,11 +217,63 @@ kadai.calendar = (function () {
       // -1は左端に「課題」のセルがある分の補正
       $.gevent.publish('inputKadai', [ { year     : weeks[retusIndex-1].year,
                                          month    : weeks[retusIndex-1].month,
-                                         day      : weeks[retusIndex-1].day,
+                                         day      : weeks[retusIndex+6].day,
                                          kadaiId  : "",
                                          contents : "",
                                          kyouka   : "" } ]);
       //}
+      } else if (tateIndex == 4){
+              let weeks = kadai.util.getWeek(configMap.year,
+                                     configMap.month-1, //月だけ0始まり
+                                     configMap.day),
+          retusIndex = this.cellIndex;
+           //ここから先のプログラムは、行を引き当てるため
+          //var dan = HTMLTableElement.rows.length;
+      //if (dan == 0){
+      // -1は左端に「課題」のセルがある分の補正
+      $.gevent.publish('inputKadai', [ { year     : weeks[retusIndex-1].year,
+                                         month    : weeks[retusIndex-1].month,
+                                         day      : weeks[retusIndex+13].day,
+                                         kadaiId  : "",
+                                         contents : "",
+                                         kyouka   : "" } ]);
+      //}
+      } else if (tateIndex == 6){
+              let weeks = kadai.util.getWeek(configMap.year,
+                                     configMap.month-1, //月だけ0始まり
+                                     configMap.day),
+          retusIndex = this.cellIndex;
+           //ここから先のプログラムは、行を引き当てるため
+          //var dan = HTMLTableElement.rows.length;
+      //if (dan == 0){
+      // -1は左端に「課題」のセルがある分の補正
+      $.gevent.publish('inputKadai', [ { year     : weeks[retusIndex-1].year,
+                                         month    : weeks[retusIndex-1].month,
+                                         day      : weeks[retusIndex+20].day,
+                                         kadaiId  : "",
+                                         contents : "",
+                                         kyouka   : "" } ]);
+      //}
+      } else if (tateIndex == 8){
+              let weeks = kadai.util.getWeek(configMap.year,
+                                     configMap.month-1, //月だけ0始まり
+                                     configMap.day),
+          retusIndex = this.cellIndex;
+           //ここから先のプログラムは、行を引き当てるため
+          //var dan = HTMLTableElement.rows.length;
+      //if (dan == 0){
+      // -1は左端に「課題」のセルがある分の補正
+      $.gevent.publish('inputKadai', [ { year     : weeks[retusIndex-1].year,
+                                         month    : weeks[retusIndex-1].month,
+                                         day      : weeks[retusIndex+27].day,
+                                         kadaiId  : "",
+                                         contents : "",
+                                         kyouka   : "" } ]);
+      //}
+      } else {
+        document.write("Error")
+      }
+      console.log(tateIndex);
     });
 
     // 課題を追加をクリックしたら、入力画面へ

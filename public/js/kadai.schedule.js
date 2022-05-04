@@ -22,11 +22,11 @@ kadai.schedule = (function () {
           + '<td class="day">金</td>'
           + '<td class="sat" class="day">土</td></tr>',
         tblankClassName : String()
-          + 'kadai-calendar-blank',
+          + 'kadai-schedule-blank',
         tregisterdKadaiClassName : String()
-          + 'kadai-calendar-registerd',
+          + 'kadai-schedule-registerd',
         taddKadaiClassName : String()
-          + 'kadai-calendar-addition',
+          + 'kadai-schedule-addition',
         settable_map : { year  : true,
                          month : true,
                          day   : true},
@@ -300,61 +300,8 @@ kadai.schedule = (function () {
     stateMap.$container = $container;
     setJqueryMap();
 
-    stateMap.kd = kadai.model.getKadai();
+    createTable()
 
-    createTable();
-
-    // 重複して登録すると、何度もイベントが発行される。それを避けるため、一旦削除
-    $(document).off('click');
-
-    // 空白セルをクリックしたら、入力画面へ
-    $(document).on('click', '.' + configMap.tblankClassName, function (event) {
-      let weeks = kadai.util.getWeek(configMap.year,
-                                     configMap.month-1, //月だけ0始まり
-                                     configMap.day),
-          retusIndex = this.cellIndex;
-
-      // -1は左端に「課題」のセルがある分の補正
-      $.gevent.publish('inputKadai', [ { year     : weeks[retusIndex-1].year,
-                                         month    : weeks[retusIndex-1].month,
-                                         day      : weeks[retusIndex-1].day,
-                                         kadaiId  : "",
-                                         contents : "",
-                                         kyouka   : "" } ]);
-    });
-
-    // 課題を追加をクリックしたら、入力画面へ
-    $(document).on('click', '.' + configMap.taddKadaiClassName, function (event) {
-      let weeks = kadai.util.getWeek(configMap.year,
-                                     configMap.month-1, //月だけ0始まり
-                                     configMap.day),
-          retusIndex = this.parentNode.cellIndex;
-
-      // -1は左端に「課題」のセルがある分の補正
-      $.gevent.publish('inputKadai', [ { year     : weeks[retusIndex-1].year,
-                                         month    : weeks[retusIndex-1].month,
-                                         day      : weeks[retusIndex-1].day,
-                                         kadaiId  : "",
-                                         contents : "",
-                                         kyouka   : "" } ]);
-    });
-
-    // 課題をクリックしたら、入力画面へ
-    $(document).on('click', '.' + configMap.tregisterdKadaiClassName, function (event) {
-      let weeks = kadai.util.getWeek(configMap.year,
-                                     configMap.month-1, //月だけ0始まり
-                                     configMap.day),
-          retusIndex = this.parentNode.cellIndex,
-          clist = this.innerHTML.split(':');
-
-      // -1は左端に「課題」のセルがある分の補正
-      $.gevent.publish('inputKadai', [ { year     : weeks[retusIndex-1].year,
-                                         month    : weeks[retusIndex-1].month,
-                                         day      : weeks[retusIndex-1].day,
-                                         kadaiId  : this.id,
-                                         contents : clist[0],
-                                         kyouka   : clist[1] }]);
-    });
 
     jqueryMap.$previousWeek
       .click( onPrevious );
