@@ -69,7 +69,7 @@
 }
 
 .kadai-calendar-memo {
-  top : 550px;
+  top : 675px;
   left : 750px;
   width : 70px;
   height : 70px;
@@ -186,4 +186,8 @@
 
 .tsuki{
   font-size : 20px;
+}
+
+.kadai-calendar-today{
+  background-color: orangered;
 }
