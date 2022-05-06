@@ -1,5 +1,5 @@
 /*
- * kadai.calendar.js
+ * kadai.schedule.js
  * カレンダー表示モジュール
  */
 kadai.schedule = (function () {
@@ -39,7 +39,7 @@ kadai.schedule = (function () {
         kd         : []
       },
       jqueryMap = {},
-      setJqueryMap, configModule, initModule, removeCalendar,
+      setJqueryMap, configModule, initModule, removeSchedule,
       onPrevious, onBack, onNext, createTable;
 
   //---DOMメソッド---
@@ -63,7 +63,7 @@ kadai.schedule = (function () {
     obj = { year  : day.getFullYear(),
             month : day.getMonth() + 1, //月だけ0始まり
             day   : day.getDate()};
-    $.gevent.publish('changeCalendar', [obj]);
+    $.gevent.publish('changeSchedule', [obj]);
   }
 
   onBack = function () {
@@ -72,7 +72,7 @@ kadai.schedule = (function () {
     obj = { year  : day.getFullYear(),
             month : day.getMonth() + 1, //月だけ0始まり
             day   : day.getDate()};
-    $.gevent.publish('changeCalendar', [obj]);
+    $.gevent.publish('changeSchedule', [obj]);
   }
 
   onNext = function () {
@@ -83,7 +83,7 @@ kadai.schedule = (function () {
     obj = { year  : day.getFullYear(),
             month : day.getMonth() + 1, //月だけ0始まり
             day   : day.getDate()};
-    $.gevent.publish('changeCalendar', [obj]);
+    $.gevent.publish('changeSchedule', [obj]);
   }
 
   //---ユーティリティメソッド---
@@ -313,7 +313,7 @@ kadai.schedule = (function () {
     return true;
   }
 
-  removeCalendar = function ( ) {
+  removeSchedule = function ( ) {
     //初期化と状態の解除
     if ( jqueryMap != null ) {
       if ( jqueryMap.$container ) {
@@ -329,6 +329,6 @@ kadai.schedule = (function () {
   return {
     configModule  : configModule,
     initModule    : initModule,
-    removeCalendar: removeCalendar
+    removeSchedule: removeSchedule
   };
 }());

@@ -136,7 +136,7 @@ kadai.calendar = (function () {
         } else {
           str += '<td>';
           //-1は最初の一つが「日付」でずれるから
-          str += String(weeks[i-1].month) + '/' + String(weeks[i-1].day);
+          str += '<div class="tsuki">' + String(weeks[i-1].month) + '月' + '</div>' + String(weeks[i-1].day) + '日';
           str += '</td>';
         }
       }

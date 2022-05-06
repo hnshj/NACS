@@ -12,7 +12,7 @@ if(userAgent.indexOf('msie') != -1 ||
 } else if(userAgent.indexOf('edge') != -1) {
     caution = "ご利用中のブラウザ、MicrosoFtEdgeは推奨環境ではありません。";
 } else if(userAgent.indexOf('chrome') != -1) {
-    caution = "ご利用中のブラウザ、GoogleChromeは推奨環境ではありません。";
+    //caution = "ご利用中のブラウザ、GoogleChromeは推奨環境ではありません。";
 } else if(userAgent.indexOf('safari') != -1) {
 } else if(userAgent.indexOf('firefox') != -1) {
     window.alert("FireFoxは推奨環境ではありません。\n\rプログラムが正常に機能しない可能性があります。");
@@ -57,9 +57,6 @@ kadai.login = (function () {
           + '<input type="password" class="kadai-login-passward-textbox" class="pass" value="hogehoge">'
           + '<button class="kadai-login-button-ok">'
             + '<p>ログイン</p>'
-          + '</button>'
-          + '<button class="kadai-login-button-cancel">'
-            + '<p>キャンセル</p>'
           + '</button>'
           +'<div class="copyright" onclick="hp()">'
           +'<p>Copyright © 2022 NACS All Rights Reserved.</p>'

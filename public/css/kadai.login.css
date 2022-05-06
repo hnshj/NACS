@@ -42,9 +42,10 @@
 }
 
 .kadai-login-button-ok{
-  top    : 260px;
-  left   : 40px;
-  width  : 260px;
+  top    : 190px;
+  left   : 320px;
+  height : 60px;
+  width  : 200px;
   line-height: 40px;
   font-size: 35px;
   border-radius: 8px;
@@ -70,8 +71,8 @@
 }
 
 .copyright{
-  top:340px;
-  left : 100px;
+  top:280px;
+  left : 40px;
   font-size:20px;
   color:white;
   background-color:coral;
