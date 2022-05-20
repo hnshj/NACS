@@ -46,7 +46,7 @@ kadai.shell = (function () {
       anchor_map : {},
     },
     jqueryMap = {},
-    copyAnchorMap, changeAnchorPart, onHashchange,
+    copyAnchorMap, changeAnchorPart, onHashchange, onTitle,
     setJqueryMap, initModule, stateCtl, resetDate;
 
   //---DOMメソッド---
@@ -102,6 +102,10 @@ kadai.shell = (function () {
       kadai.login.configModule({});
       kadai.login.initModule( jqueryMap.$main );
 
+    //設定の場合
+   // } else if ( anchor_map.status == 'settings' ) {
+     // kadai.settings.initModule( jqueryMap.$main);
+
     // カレンダー表示の場合
     } else if ( anchor_map.status == 'calendar' ) {
       kadai.calendar.configModule({ year  : anchor_map._status.year,
@@ -122,7 +126,7 @@ kadai.shell = (function () {
 
     //メモの場合
     }else if( anchor_map.status == 'memo'){
-      kadai.memodx.initModule( jqueryMap.$main);
+      kadai.memo.initModule( jqueryMap.$main);
     
     //時間割の場合
     }else if( anchor_map.status == 'schedule'){
@@ -187,12 +191,20 @@ kadai.shell = (function () {
     return bool_return;
   }
 
+  onTitle = function () {
+    $.gevent.publish('settings');
+
+    window.alert("settings");
+  }
+
   //---パブリックメソッド---
   initModule = function ( $container ) {
 
     stateMap.$container = $container; //ここで渡されるのはkadai全体
     $container.html( configMap.main_html );
     setJqueryMap();
+    jqueryMap.$title
+     .click( onTitle );
 
     // 許容されるuriアンカーの型を指定
     $.uriAnchor.configModule ({
@@ -225,6 +237,13 @@ kadai.shell = (function () {
       //履歴には残さず、しれっとダイヤログを書き直してやり直しさせる。
       kadai.login.configModule({});
       kadai.login.initModule( jqueryMap.$main );
+    });
+
+    //設定
+    $.gevent.subscribe( $container, 'settings', function (event, msg_map) {
+      changeAnchorPart({
+        status : 'settings',
+      });
     });
 
     // カレンダー日付変更

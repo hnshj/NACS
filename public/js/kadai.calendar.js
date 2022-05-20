@@ -11,9 +11,13 @@ kadai.calendar = (function () {
           + '<button class="kadai-calendar-previousWeek">前の週</button>'
           + '<button class="kadai-calendar-back">今週へ戻る</button>'
           + '<button class="kadai-calendar-nextWeek">次の週</button>'
+          //+ '<div class="kadai-calendar-function">'
           + '<button class="kadai-calendar-schedule">時間割</button>'
+         // + '</div>'
           + '<button class="kadai-calendar-memo">メモ</button>'
-          + '<table class="kadai-calendar-main"></table>',
+          + '<table class="kadai-calendar-main"></table>'
+          + '<div class="sMonth"><span id="startMonth></span></div>'
+          + '<div class="lMonth"><span id="lastMonth></span></div>',
         tHeader : String()
           + '<tr class="day"><td>曜日</td>'
           + '<td class="sun" class="day">日</td>'
@@ -206,7 +210,6 @@ kadai.calendar = (function () {
 
     // 空白セルをクリックしたら、入力画面へ
     $(document).on('click', '.' + configMap.tblankClassName, function (event) {
-      //document.getElementById();
       let tateIndex = $(this).closest('tr').index(), // ヘッダが1行で、0始まりだから1から
        temp = $(this).text();
       console.log(tateIndex)
@@ -217,9 +220,7 @@ kadai.calendar = (function () {
                                      configMap.day,
                                      nansyume),
           retusIndex = this.cellIndex;
-           //ここから先のプログラムは、行を引き当てるため
-          //var dan = HTMLTableElement.rows.length;
-      //if (dan == 0){
+
       // -1は左端に「課題」のセルがある分の補正
       $.gevent.publish('inputKadai', [ { year     : weeks[retusIndex-1].year,
                                          month    : weeks[retusIndex-1].month,
@@ -235,9 +236,15 @@ kadai.calendar = (function () {
 
     // 課題を追加をクリックしたら、入力画面へ
     $(document).on('click', '.' + configMap.taddKadaiClassName, function (event) {
+      let tateIndex = $(this).closest('tr').index(), // ヘッダが1行で、0始まりだから1から
+       temp = $(this).text();
+      console.log(tateIndex)
+      
+      let nansyume = tateIndex / 2 - 1;
       let weeks = kadai.util.getWeek(configMap.year,
                                      configMap.month-1, //月だけ0始まり
-                                     configMap.day),
+                                     configMap.day,
+                                     nansyume),
           retusIndex = this.parentNode.cellIndex;
 
       // -1は左端に「課題」のセルがある分の補正
@@ -251,9 +258,15 @@ kadai.calendar = (function () {
 
     // 課題をクリックしたら、入力画面へ
     $(document).on('click', '.' + configMap.tregisterdKadaiClassName, function (event) {
+      let tateIndex = $(this).closest('tr').index(), // ヘッダが1行で、0始まりだから1から
+       temp = $(this).text();
+      console.log(tateIndex)
+      
+      let nansyume = tateIndex / 2 - 1;
       let weeks = kadai.util.getWeek(configMap.year,
                                      configMap.month-1, //月だけ0始まり
-                                     configMap.day),
+                                     configMap.day,
+                                     nansyume),
           retusIndex = this.parentNode.cellIndex,
           clist = this.innerHTML.split(':');
 

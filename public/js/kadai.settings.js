@@ -3,15 +3,9 @@
  *メモ表示モジュール
  */
   //---読み込み---
-  var MemoData = "";
-  if(!localStorage.getItem('MemoData')) {
-      MemoData = "メモは登録されていません。";
-  } else {
-      MemoData = localStorage.getItem('MemoData');
-  }
-  document.memomodule.memo.value = MemoData;
+  //load();
 
-kadai.memo = (function (){
+kadai.settings = (function (){
     'user strict';
 
     console.log('intel haitteru');
@@ -19,12 +13,9 @@ kadai.memo = (function (){
     //---モジュールスコープ変数---
     let configMap = {
         main_html : String()
-        + '<button class="kadai-memo-calendar">課題</button>'
-        + '<button class="kadai-memo-schedule">時間割</button>'
-        + '<div class="memo">'
-        + '<form name="memomodule">'
-        + '<textarea name="memo" class="kadai-memo-memo"></textarea>'
-        + '</form>'
+        + '<div class="menu">'
+        + '</div>'
+        + '<div class="settings">'
         + '</div>'
     },
     stateMap = {
