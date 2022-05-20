@@ -13,7 +13,8 @@ kadai.shell = (function () {
                 calendar        : true,
                 memo            : true,
                 schedule        : true,
-                input           : true
+                input           : true,
+                settings        : true
               },
       _status : {
         year     : true,                  // status : calendar,inputのとき使用
@@ -39,7 +40,6 @@ kadai.shell = (function () {
       + '</div>',
     titleStr : String()
     + '<strong>NACS</strong>'
-      //+ '<img src="img/NACSlogo1.jpg" height="40" width="40">'
     },
     stateMap = {
       $container : null,
@@ -61,6 +61,12 @@ kadai.shell = (function () {
   }
 
   //---イベントハンドラ---
+  onTitle = function () {
+    $.gevent.publish('settings');
+
+    window.alert("settings");
+  }
+
   onHashchange = function ( event ) {
     let anchor_map_previous = copyAnchorMap(),
         anchor_map_proposed,
@@ -103,10 +109,10 @@ kadai.shell = (function () {
       kadai.login.initModule( jqueryMap.$main );
 
     //設定の場合
-   // } else if ( anchor_map.status == 'settings' ) {
-     // kadai.settings.initModule( jqueryMap.$main);
-
-    // カレンダー表示の場合
+    } else if ( anchor_map.status == 'settings' ) {
+      kadai.settings.initModule( jqueryMap.$main);
+      console.log("settings");
+    //カレンダー表示の場合
     } else if ( anchor_map.status == 'calendar' ) {
       kadai.calendar.configModule({ year  : anchor_map._status.year,
                                     month : anchor_map._status.month,
@@ -191,11 +197,7 @@ kadai.shell = (function () {
     return bool_return;
   }
 
-  onTitle = function () {
-    $.gevent.publish('settings');
 
-    window.alert("settings");
-  }
 
   //---パブリックメソッド---
   initModule = function ( $container ) {

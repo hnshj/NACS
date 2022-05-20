@@ -2,20 +2,14 @@
  *kadai.memo.js
  *メモ表示モジュール
  */
-  //---読み込み---
-  var MemoData = "";
-  if(!localStorage.getItem('MemoData')) {
-      MemoData = "メモは登録されていません。";
-  } else {
-      MemoData = localStorage.getItem('MemoData');
-  }
-  document.memomodule.memo.value = MemoData;
+
 
 kadai.memo = (function (){
     'user strict';
 
     console.log('intel haitteru');
 
+    load()
     //---モジュールスコープ変数---
     let configMap = {
         main_html : String()
@@ -53,7 +47,7 @@ kadai.memo = (function (){
       day   : day.getDate()};
     $.gevent.publish('changeCalendar', [obj]);
 
-    window.alert("calendar");
+    window.alert("メモを閉じるとメモの内容は、削除されます。");
     save();
   }
 
@@ -65,7 +59,7 @@ kadai.memo = (function (){
       day   : day.getDate()};
     $.gevent.publish('schedule', [obj]);
 
-    window.alert("schedule");
+    window.alert("メモを閉じるとメモの内容は、削除されます。");
     save();
   }
 

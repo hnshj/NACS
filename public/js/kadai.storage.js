@@ -12,11 +12,9 @@ function save() {
 
 // 読込
 function load() {
-    var MemoData = "";
-    if(!localStorage.getItem('MemoData')) {
-        MemoData = "メモは登録されていません。";
-    } else {
-        MemoData = localStorage.getItem('MemoData');
-    }
-    document.memomodule.memo.value = MemoData;
+    var MemoData = localStorage.getItem('MemoData');
+    if(MemoData == undefined) {
+        MemoData = [];
+    } else {}
+ MemoData = localStorage.getItem('MemoData');
 }
