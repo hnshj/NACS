@@ -99,190 +99,62 @@ kadai.schedule = (function () {
           };
         };
 
-    jqueryMap.$main.append(configMap.tHeader);
-
-    for (j = 0; j < 1; j++) {
-      weeks = kadai.util.getWeek(configMap.year,
-                               configMap.month-1, //月だけ0始まり
-                               configMap.day,
-                               j);
-      // 曜日あたり1行目：日付
-      str = '<tr>';
-      for (i = 0; i < 8; i++) {
-        if (i == 0) {
-          str += '<td>日付</td>';
-        } else {
-          str += '<td>';
-          //-1は最初の一つが「日付」でずれるから
-          str += String(weeks[i-1].month) + '/' + String(weeks[i-1].day);
-          str += '</td>';
-        }
-      }
-      str += '</tr>';
-      // 曜日あたり2行目：課題
-      str += '<tr>';
-      for (i = 0; i < 8; i++) {
-        if (i == 0) {
-          str += '<td>１時間目</td>';
-        } else {
-          // ここで課題をいれる
-
-          //-1は最初の一つが「課題」でずれるから
-          kdOneDay = stateMap.kd.filter(selectfunc(weeks[i-1].year, weeks[i-1].month, weeks[i-1].day));
-          if ( kdOneDay.length == 0 ) {
-            str += '<td class="' + configMap.tblankClassName + '"></td>';
-
-          } else {
-            let k;
-
-            str += '<td>';
-
-            for ( k = 0; k < kdOneDay.length; k++ ) {
-
-              str += '<p class="' + configMap.tregisterdKadaiClassName + '" ';
-              str += 'id ="' + kdOneDay[k]._id + '" >';
-              str += kdOneDay[k].contents[kdOneDay[k].contents.length-1]
-                     + ':'
-                     + kdOneDay[k].kyouka[kdOneDay[k].kyouka.length-1]
-                     + '</p>';
+        jqueryMap.$main.append(configMap.tHeader);
+    
+        str = '<table id="calendar">'
+        for (j = 0; j < 4; j++) {
+          weeks = kadai.util.getWeek(configMap.year,
+                                   configMap.month-1, //月だけ0始まり
+                                   configMap.day,
+                                   j);
+        //曜日あたり１行目：日付
+        str = '<tr>';
+          for (i = 0; i < 8; i++) {
+            if (i == 0) {
+              str += '<td>日付</td>';
+            } else {
+              str += '<td>';
+              //-1は最初の一つが「日付」でずれるから
+              str += '<div class="tsuki">' + String(weeks[i-1].month) + '月' + '</div>' + String(weeks[i-1].day) + '日';
+              str += '</td>';
             }
-            str += '<p class="' + configMap.taddKadaiClassName + '">もっと追加する</p></td>';
-            }
-        }
-      str += '</td>'
-  }
-    str += '<tr>';
+          }
+          // 曜日あたり2行目：課題
+        str += '<tr>';
         for (i = 0; i < 8; i++) {
           if (i == 0) {
-            str += '<td>日付</td>';
+            str += '<td>課題</td>';
           } else {
-            str += '<td>';
-            //-1は最初の一つが「日付」でずれるから
-            str += String(weeks[i-1].month) + '/' + String(weeks[i-1].day);
-            str += '</td>';
+            // ここで課題をいれる
+        
+            //-1は最初の一つが「課題」でずれるから
+            kdOneDay = stateMap.kd.filter(selectfunc(weeks[i-1].year, weeks[i-1].month, weeks[i-1].day));
+            if ( kdOneDay.length == 0 ) {
+              str += '<td class="' + configMap.tblankClassName + '"></td>';
+        
+            } else {
+              let k;
+        
+              str += '<td>';
+        
+              for ( k = 0; k < kdOneDay.length; k++ ) {
+        
+                str += '<p class="' + configMap.tregisterdKadaiClassName + '" ';
+                str += 'id ="' + kdOneDay[k]._id + '" >';
+                str += kdOneDay[k].contents[kdOneDay[k].contents.length-1]
+                       + ':'
+                       + kdOneDay[k].kyouka[kdOneDay[k].kyouka.length-1]
+                       + '</p>';
+              }
+              str += '<p class="' + configMap.taddKadaiClassName + '">もっと追加する</p></td>';
+              }
           }
+        str += '</td>'
         }
-        // 曜日あたり2行目：課題
-      str += '<tr>';
-      for (i = 0; i < 8; i++) {
-        if (i == 0) {
-          str += '<td>課題</td>';
-        } else {
-          // ここで課題をいれる
-
-          //-1は最初の一つが「課題」でずれるから
-          kdOneDay = stateMap.kd.filter(selectfunc(weeks[i-1].year, weeks[i-1].month, weeks[i-1].day));
-          if ( kdOneDay.length == 0 ) {
-            str += '<td class="' + configMap.tblankClassName + '"></td>';
-
-          } else {
-            let k;
-
-            str += '<td>';
-
-            for ( k = 0; k < kdOneDay.length; k++ ) {
-
-              str += '<p class="' + configMap.tregisterdKadaiClassName + '" ';
-              str += 'id ="' + kdOneDay[k]._id + '" >';
-              str += kdOneDay[k].contents[kdOneDay[k].contents.length-1]
-                     + ':'
-                     + kdOneDay[k].kyouka[kdOneDay[k].kyouka.length-1]
-                     + '</p>';
-            }
-            str += '<p class="' + configMap.taddKadaiClassName + '">もっと追加する</p></td>';
-            }
+        str += '</table>'
+        jqueryMap.$main.append(str);
         }
-      str += '</td>'
-  }
-  str += '<tr>';
-        for (i = 0; i < 8; i++) {
-          if (i == 0) {
-            str += '<td>日付</td>';
-          } else {
-            str += '<td>';
-            //-1は最初の一つが「日付」でずれるから
-            str += String(weeks[i-1].month) + '/' + String(weeks[i-1].day);
-            str += '</td>';
-          }
-        }
-        // 曜日あたり2行目：課題
-      str += '<tr>';
-      for (i = 0; i < 8; i++) {
-        if (i == 0) {
-          str += '<td>課題</td>';
-        } else {
-          // ここで課題をいれる
-
-          //-1は最初の一つが「課題」でずれるから
-          kdOneDay = stateMap.kd.filter(selectfunc(weeks[i-1].year, weeks[i-1].month, weeks[i-1].day));
-          if ( kdOneDay.length == 0 ) {
-            str += '<td class="' + configMap.tblankClassName + '"></td>';
-
-          } else {
-            let k;
-
-            str += '<td>';
-
-            for ( k = 0; k < kdOneDay.length; k++ ) {
-
-              str += '<p class="' + configMap.tregisterdKadaiClassName + '" ';
-              str += 'id ="' + kdOneDay[k]._id + '" >';
-              str += kdOneDay[k].contents[kdOneDay[k].contents.length-1]
-                     + ':'
-                     + kdOneDay[k].kyouka[kdOneDay[k].kyouka.length-1]
-                     + '</p>';
-            }
-            str += '<p class="' + configMap.taddKadaiClassName + '">もっと追加する</p></td>';
-            }
-        }
-      str += '</td>'
       }
-      str += '<tr>';
-        for (i = 0; i < 8; i++) {
-          if (i == 0) {
-            str += '<td>日付</td>';
-          } else {
-            str += '<td>';
-            //-1は最初の一つが「日付」でずれるから
-            str += String(weeks[i-1].month) + '/' + String(weeks[i-1].day);
-            str += '</td>';
-          }
-        }
-        // 曜日あたり2行目：課題
-      str += '<tr>';
-      for (i = 0; i < 8; i++) {
-        if (i == 0) {
-          str += '<td>課題</td>';
-        } else {
-          // ここで課題をいれる
-
-          //-1は最初の一つが「課題」でずれるから
-          kdOneDay = stateMap.kd.filter(selectfunc(weeks[i-1].year, weeks[i-1].month, weeks[i-1].day));
-          if ( kdOneDay.length == 0 ) {
-            str += '<td class="' + configMap.tblankClassName + '"></td>';
-
-          } else {
-            let k;
-
-            str += '<td>';
-
-            for ( k = 0; k < kdOneDay.length; k++ ) {
-
-              str += '<p class="' + configMap.tregisterdKadaiClassName + '" ';
-              str += 'id ="' + kdOneDay[k]._id + '" >';
-              str += kdOneDay[k].contents[kdOneDay[k].contents.length-1]
-                     + ':'
-                     + kdOneDay[k].kyouka[kdOneDay[k].kyouka.length-1]
-                     + '</p>';
-            }
-            str += '<p class="' + configMap.taddKadaiClassName + '">もっと追加する</p></td>';
-            }
-        }
-      str += '</td>'
-      }
-      }
-      jqueryMap.$main.append(str);
-    }
 
 
   //---パブリックメソッド---

@@ -14,5 +14,5 @@ let kadai = (function () {
 }());
 
 function hp(){
-  window.location.href = "#";
+  window.location.href = "https://github.com/hnshj/NACS.git";
 }

@@ -13,8 +13,6 @@ kadai.memo = (function (){
     //---モジュールスコープ変数---
     let configMap = {
         main_html : String()
-        + '<button class="kadai-memo-calendar">課題</button>'
-        + '<button class="kadai-memo-schedule">時間割</button>'
         + '<div class="memo">'
         + '<form name="memomodule">'
         + '<textarea name="memo" class="kadai-memo-memo"></textarea>'

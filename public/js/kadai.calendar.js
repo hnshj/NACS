@@ -11,10 +11,6 @@ kadai.calendar = (function () {
           + '<button class="kadai-calendar-previousWeek">前の週</button>'
           + '<button class="kadai-calendar-back">今週へ戻る</button>'
           + '<button class="kadai-calendar-nextWeek">次の週</button>'
-          //+ '<div class="kadai-calendar-function">'
-          + '<button class="kadai-calendar-schedule">時間割</button>'
-         // + '</div>'
-          + '<button class="kadai-calendar-memo">メモ</button>'
           + '<table class="kadai-calendar-main"></table>'
           + '<div class="sMonth"><span id="startMonth></span></div>'
           + '<div class="lMonth"><span id="lastMonth></span></div>',
@@ -136,17 +132,41 @@ kadai.calendar = (function () {
                                j);
     //曜日あたり１行目：日付
     str = '<tr>';
+    if (j == 0){
       for (i = 0; i < 8; i++) {
         if (i == 0) {
           str += '<td>日付</td>';
-        } else {
-          str += '<td>';
+        } else if (i == 1) 
+        {str += '<td>';
           //-1は最初の一つが「日付」でずれるから
           str += '<div class="tsuki">' + String(weeks[i-1].month) + '月' + '</div>' + String(weeks[i-1].day) + '日';
           str += '</td>';
+        } else {
+          str += '<td>';
+          //-1は最初の一つが「日付」でずれるから
+          str += String(weeks[i-1].day) + '日';
+          str += '</td>';
         }
       }
-      // 曜日あたり2行目：課題
+    } else if (j == 3){
+          if (i == 7){
+            str += '<td>';
+          //-1は最初の一つが「日付」でずれるから
+          str += '<div class="tsuki">' + String(weeks[i-1].month) + '月' + '</div>' + String(weeks[i-1].day) + '日';
+          str += '</td>'
+          } else {
+            str += '<td>';
+            //-1は最初の一つが「日付」でずれるから
+            str += String(weeks[i-1].day) + '日';
+            str += '</td>';
+          }
+    } else {
+      str += '<td>';
+      //-1は最初の一つが「日付」でずれるから
+      str += String(weeks[i-1].day) + '日';
+      str += '</td>';
+    }
+       // 曜日あたり2行目：課題
     str += '<tr>';
     for (i = 0; i < 8; i++) {
       if (i == 0) {
@@ -178,9 +198,9 @@ kadai.calendar = (function () {
       }
     str += '</td>'
     }
+  }
     str += '</table>'
     jqueryMap.$main.append(str);
-    }
   }
 
 

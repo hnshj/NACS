@@ -5,12 +5,8 @@
     <title>NACS</title>
     <link rel="shortcut icon" href="ico/NACS.logo6.ico" type="image/x-icon">
 
-    <!--スタイルシート-->
-    <link rel="stylesheet" href="css/kadai.css">
-    <link rel="stylesheet" href="css/kadai.shell.css">
-    <link rel="stylesheet" href="css/kadai.login.css">
-    <link rel="stylesheet" href="css/kadai.memo.css">
-    <link rel="stylesheet" href="css/kadai.calendar.css"><!--画面が増えたらここに追加-->
+  <!--CSS-->
+  <span id="css"></span>
 
     <!--サードパーティーjavascript-->
     <script type="text/javascript" src="js/jq/jquery.3.6.0.min.js"></script>
@@ -29,12 +25,14 @@
     <script type="text/javascript" src="js/kadai.acct.js"></script>
     <script type="text/javascript" src="js/kadai.login.js"></script>
     <script type="text/javascript" src="js/kadai.calendar.js"></script>
+    <script type="text/javascript" src="js/kadai.schedule.js"></script>
+    <script type="text/javascript" src="js/kadai.settings.js"></script>
     <script type="text/javascript" src="js/kadai.input.js"></script><!--画面が増えたらここに追加-->
-    <script type="text/javascript" src="js/kadai.storage.js"></script>--><!--ログインを記憶-->
+    <script type="text/javascript" src="js/kadai.storage.js"></script><!--ログインを記憶-->
     <script type="text/javascript" src="js/kadai.alert.js"></script><!--推奨環境かの識別-->
     <script type="text/javascript" src="js/kadai.firstvisit.js"></script><!--始めてきましたか？-->
     <script type="text/javascript" src="js/kadai.memo.js"></script><!--メモする-->
-
+    <script type="text/javascript" src="js/kadai.css.js"></script> <!--CSSの書き換え-->
     <script>
       $(function () { kadai.initModule( $('#kadai') ); });
     </script>

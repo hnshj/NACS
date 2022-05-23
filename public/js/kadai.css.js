@@ -1,0 +1,7 @@
+css.innerHTML = '<link rel="stylesheet" href="css/kadai.css">'
++'<link rel="stylesheet" href="css/kadai.shell.css">'
++'<link rel="stylesheet" href="css/kadai.login.css">'
++'<link rel="stylesheet" href="css/kadai.memo.css">'
++'<link rel="stylesheet" href="css/kadai.calendar.css">'
++'<link rel="stylesheet" href="css/kadai.schedule.css">'
++'<link rel="stylesheet" href="css/kadai.settings.css">'

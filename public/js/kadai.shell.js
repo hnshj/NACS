@@ -34,12 +34,25 @@ kadai.shell = (function () {
     main_html : String()
       + '<div class="kadai-shell-head">'
         + '<div class="kadai-shell-head-title"></div>'
+        + '<div class="kadai-shell-head-function">'
+        + '<button class="kadai-shell-head-kadai">課題</button>'
+        + '<button class="kadai-shell-head-schedule">時間割</button>'
+        + '<button class="kadai-shell-head-memo">メモ</button>'
+        + '</div>'
         + '<button class="kadai-shell-head-acct"></button>'
       + '</div>'
       + '<div class="kadai-shell-main">'
       + '</div>',
     titleStr : String()
     + '<strong>NACS</strong>'
+    /*
+    menuStr  : String()
+    + '<div class="kadai-shell-head-menubar">'
+    + '<div class="kadai-shell-head-kadai">課題一覧</div>'
+    + '<div class="kadai-shell-head-schedule">時間割</div>'
+    + '<div class="kadai-shell-head-memo">メモ</div>'
+    + '</div>'
+    */
     },
     stateMap = {
       $container : null,
@@ -47,6 +60,7 @@ kadai.shell = (function () {
     },
     jqueryMap = {},
     copyAnchorMap, changeAnchorPart, onHashchange, onTitle,
+    onCalendar, onSchedule, onMemo,
     setJqueryMap, initModule, stateCtl, resetDate;
 
   //---DOMメソッド---
@@ -56,6 +70,9 @@ kadai.shell = (function () {
       $container : $container,
       $title     : $container.find( '.kadai-shell-head-title' ),
       $acct      : $container.find( '.kadai-shell-head-acct' ),
+      $calendar  : $container.find( '.kadai-shell-head-kadai' ),
+      $schedule  : $container.find( '.kadai-shell-head-schedule' ),
+      $memo      : $container.find( '.kadai-shell-head-memo' ),
       $main      : $container.find( '.kadai-shell-main' )
     };
   }
@@ -66,6 +83,31 @@ kadai.shell = (function () {
 
     window.alert("settings");
   }
+
+  onCalendar = function () {
+    let day = new Date(), obj;
+
+    obj = { year  : day.getFullYear(),
+      month : day.getMonth() + 1, //月だけ0始まり
+      day   : day.getDate()};
+    $.gevent.publish('changeCalendar', [obj]);
+  }
+
+  onMemo = function () {
+    //memo
+    $.gevent.publish('memo');
+  }
+
+  onSchedule = function () {
+    let day = new Date(), obj;
+
+    obj = { year  : day.getFullYear(),
+      month : day.getMonth() + 1, //月だけ0始まり
+      day   : day.getDate()};
+    $.gevent.publish('schedule', [obj]);
+  }
+
+
 
   onHashchange = function ( event ) {
     let anchor_map_previous = copyAnchorMap(),
@@ -207,7 +249,12 @@ kadai.shell = (function () {
     setJqueryMap();
     jqueryMap.$title
      .click( onTitle );
-
+    jqueryMap.$calendar
+     .click( onCalendar );
+    jqueryMap.$schedule
+     .click( onSchedule );
+    jqueryMap.$memo
+     .click( onMemo );
     // 許容されるuriアンカーの型を指定
     $.uriAnchor.configModule ({
       schema_map : configMap.anchor_schema_map
@@ -215,6 +262,9 @@ kadai.shell = (function () {
 
     // タイトルの設定
     jqueryMap.$title.html( configMap.titleStr );
+
+    //メニューの設定
+    //jqueryMap.$menu.html( configMap.menuStr);
 
     // 以降、各種イベント処理の登録
     // ログインダイアログ表示

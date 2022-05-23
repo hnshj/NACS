@@ -11,14 +11,27 @@ kadai.settings = (function (){
     //---モジュールスコープ変数---
     let configMap = {
         main_html : String()
-        + '<h1>色の設定</h1>'
+        + '<div class="menu">'
+        + '<div class="content">'
+        + '<p class="theme">テーマ</p>'
+        + '<p class="feedback">フィードバック</p>'
         + '<p class="credit">クレジット</p>'
         + '</div>'
         + '<div class="settings">'
-        + '<canvas class="fantasticblue" id="1" width="100" height="100"></canvas>'
-        + '<canvas class="calmgreen" id="2" width="100" height="100"></canvas>'
-        + '<canvas class="dreamingpurple" id="3" width="100" height="100"></canvas>'
-        + '<canvas class="passionategreen" id="4" width="100" height="100"></canvas>'
+        + '<span id="content"></span>'
+        + '<p>色の設定</p>'
+        + '<div class="blue">'
+        + '<img src="./img/Color/blue.JPG" class="color">'
+        + '</div>'
+        + '<div class="green">'
+        + '<img src="./img/Color/green.JPG" class="color">'
+        + '</div>'
+        + '<div class="yellow">'
+        + '<img src="./img/Color/yellow.JPG" class="color">'
+        + '</div>'
+        + '<div class="purple">'
+        + '<img src="./img/Color/purple.JPG" class="color">'
+        + '</div>'
         + '</div>'
     },
 
@@ -28,13 +41,35 @@ kadai.settings = (function (){
       $container : null,
     },
     jqueryMap = {},
-    setJqueryMap, configModule, initModule, onCalendar, onSchedule;
+    setJqueryMap, configModule, initModule;
 
+    //設定コンテンツ
+var settingstatement = 0;
+var content = [];
+if (settingstatement == 0){
+  content = '<h1>色の設定</h1>'
+           + '<canvas class="fantasticblue" id="1" width="100" height="100"></canvas>'
+           + '<canvas class="calmgreen" id="2" width="100" height="100"></canvas>'
+           + '<canvas class="dreamingpurple" id="3" width="100" height="100"></canvas>'
+           + '<canvas class="passionategreen" id="4" width="100" height="100"></canvas>'
+           + '<button>フィードバック</button>';
+
+  content.innerHTML = '<p>色の設定</p>'
+           + '<canvas class="fantasticblue" id="1" width="100" height="100"></canvas>'
+           + '<canvas class="calmgreen" id="2" width="100" height="100"></canvas>'
+           + '<canvas class="dreamingpurple" id="3" width="100" height="100"></canvas>'
+           + '<canvas class="passionategreen" id="4" width="100" height="100"></canvas>'
+           + '<button>フィードバック</button>';
+}
      //---DOMメソッド---
   setJqueryMap = function () {
     let $container = stateMap.$container;
     jqueryMap = {
-      $container   : $container
+      $container   : $container,
+      $blue        : $container.find( '.blue' ),
+      $green       : $container.find( '.green' ),
+      $yellow      : $container.find( '.yellow' ),
+      $purple      : $container.find( '.purple' )
     };
   }
 
@@ -58,7 +93,8 @@ kadai.settings = (function (){
     setJqueryMap();
     return true;
   }
-    
+ 
+  /*
   //着色
       //1
       const board1 = document.querySelector("#1");
@@ -91,10 +127,46 @@ kadai.settings = (function (){
       // 塗りつぶす
       ctx4.fillStyle = "Orange";        // 塗りつぶす色
       ctx4.fillRect(25, 25, 50, 50);    // 描画
-
+*/
       
+//設定コンテンツ
+var settingstatement = 0;
+var content = '<p>色の設定</p>'
+           + '<canvas class="fantasticblue" id="1" width="100" height="100"></canvas>'
+           + '<canvas class="calmgreen" id="2" width="100" height="100"></canvas>'
+           + '<canvas class="dreamingpurple" id="3" width="100" height="100"></canvas>'
+           + '<canvas class="passionategreen" id="4" width="100" height="100"></canvas>'
+           + '<button>フィードバック</button>';
+          
+
+content.innerHTML = content;
+
+initModule = function ( $container ) {
+  $container.html( configMap.main_html );
+  stateMap.$container = $container;
+  setJqueryMap();
+
+  stateMap.kd = kadai.model.getKadai();
+
+  createTable();
+
+  // 重複して登録すると、何度もイベントが発行される。それを避けるため、一旦削除
+  $(document).off('click');
 
 
+
+  jqueryMap.$blue
+    .click( onBlue );
+  jqueryMap.$green
+    .click( onGreen );
+  jqueryMap.$yellow
+    .click( onYellow );
+  jqueryMap.$purple
+    .click( onPurple );
+  return true;
+}
+
+console.log(content)
 return {
   configModule  : configModule,
   initModule    : initModule
