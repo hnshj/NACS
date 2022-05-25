@@ -1,0 +1,214 @@
+/*
+ * kadai.calendar.css
+ * カレンダー表示モジュール
+ */
+
+ .kadai-calendar-previousWeek, .kadai-calendar-back,
+ .kadai-calendar-nextWeek, .kadai-calendar-function,
+ .kadai-calendar-schedule, .kadai-calendar-memo,
+ .kadai-calendar-calendar, .kadai-calendar-main,
+ .sMonth, .lMonth
+
+ {
+   position: absolute;
+ }
+
+.kadai-calendar-previousWeek {
+  top : 10px;
+  left : 10px;
+  width : 150px;
+  height : 40px;
+  font-size: 25px;
+  border-radius: 8px;
+  cursor: pointer;
+  background-color: #E6E6FA;
+}
+.kadai-calendar-previousWeek:hover{
+  background-color: rgb(250, 248, 161);
+}
+
+.kadai-calendar-back {
+  top : 10px;
+  left : 180px;
+  width : 150px;
+  height : 40px;
+  font-size: 25px;
+  cursor: pointer;
+  border-radius: 8px;
+  background-color: #E6E6FA;
+}
+.kadai-calendar-back:hover{
+  background-color: rgb(250, 248, 161);
+}
+
+.kadai-calendar-nextWeek {
+  top : 10px;
+  left : 350px;
+  width : 150px;
+  height : 40px;
+  font-size: 25px;
+  cursor: pointer;
+  border-radius: 8px;
+  background-color: #E6E6FA;
+}
+.kadai-calendar-nextWeek:hover{
+  background-color: rgb(250, 248, 161);
+}
+
+/*
+.kadai-calemdar-function{
+  width: 100%;
+  background-color: #89c7de;
+  padding: 30px 0;
+  position: absolute;/*←絶対位置*/ /*
+  bottom: 0; /*下に固定*/ /*
+}
+*/
+
+
+.kadai-calendar-schedule {
+  top : 10px;
+  left : 520px;
+  width : 150px;
+  height : 40px;
+  font-size: 25px;
+  cursor: pointer;
+  border-radius: 8px;
+  background-color: #E6E6FA;
+}
+
+.kadai-calendar-memo {
+  top : 675px;
+  left : 750px;
+  width : 70px;
+  height : 70px;
+  font-size: 25px;
+  cursor: pointer;
+  border-radius: 35px;
+  background-color: #E6E6FA;
+}
+.kadai-calendar-memo:hover{
+  background-color: rgb(250, 248, 161);
+}
+
+.kadai-calendar-main {
+  top    : 70px;
+  left   : 50px;
+  border-collapse:collapse;
+  background : rgb(255,252,102);
+  margin:auto;
+}
+
+.kadai-calendar-main th, .kadai-calendar-main tr, .kadai-calendar-main td {
+  font-size: 40px;
+  border : 1px solid black;
+}
+
+.kadai-input-title{
+  top    : 140px;
+  left   : 20px;
+  right  : 20px;
+  font-size: 30px;
+}
+
+.kadai-input-contents-title {
+  top    : 140px;
+  left   : 20px;
+  right  : 20px;
+  font-size: 25px;
+}
+
+.kadai-input-kyouka-title{
+  top    : 140px;
+  left   : 20px;
+  right  : 20px;
+  font-size: 25px;
+}
+
+.kadai-input-kyouka-textbox {
+  top    : 40px;
+  left   : 20px;
+  right  : 20px;
+  font-size: 25px;
+}
+
+.kadai-input-contents-textbox {
+  top    : 40px;
+  left   : 20px;
+  right  : 20px;
+  font-size: 25px;
+}
+
+.kadai-input-button-ok{
+  top    : 10px;
+  left   : 10px;
+  width  : 150px;
+  height : 40px;
+  font-size: 25px;
+  border-radius: 8px;
+  cursor: pointer;
+  background-color: #E6E6FA;
+}
+.kadai-input-button-ok:hover{
+  background-color: rgb(250, 248, 161);
+}
+
+.kadai-input-button-cancel{
+  top    : 10px;
+  left   : 180px;
+  width  : 150px;
+  height : 40px;
+  font-size: 25px;
+  border-radius: 8px;
+  cursor: pointer;
+  background-color: #E6E6FA;
+}
+.kadai-input-button-cancel:hover{
+  background-color: rgb(250, 248, 161);
+}
+
+.kadai-input-button-remove{
+  top    : 10px;
+  left   : 350px;
+  width  : 150px;
+  height : 40px;
+  font-size: 25px;
+  border-radius: 8px;
+  cursor: pointer;
+  background-color: #E6E6FA;
+}
+.kadai-input-button-remove:hover{
+  background-color: rgb(250, 248, 161);
+}
+
+.sun{
+  color : red;
+}
+
+.sat{
+  color : blue;
+}
+
+.day{
+  text-align: center;
+}
+
+.tsuki{
+  font-size : 20px;
+}
+
+.kadai-calendar-today{
+  background-color: orangered;
+}
+
+.sMonth{
+  top :70px;
+  left : 10px;
+  font-size : 20px;
+}
+
+.lmonth{
+  top : 675px;
+  left : 790px;
+  font-size : 20px;
+}

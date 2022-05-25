@@ -1,0 +1,100 @@
+/*
+ * kadai.login.css
+ * ログイン画面モジュール
+ */
+
+ .kadai-login-username-title, .kadai-login-username-textbox,
+ .kadai-login-passward-title, .kadai-login-passward-textbox,
+ .kadai-login-button-ok, .kadai-login-button-cancel,
+ .copyright, .caution, .other, .a
+ {
+   position: absolute;
+ }
+
+.kadai-login-username-title {
+  top    : 60px;
+  left   : 20px;
+  right  : 20px;
+  font-size: 25px;
+}
+
+.kadai-login-username-textbox {
+  top    : 100px;
+  left   : 20px;
+  height : 40px;
+  width: 280px;
+  font-size: 35px;
+}
+
+.kadai-login-passward-title {
+  top    : 160px;
+  left   : 20px;
+  right  : 20px;
+  font-size: 25px;
+}
+
+.kadai-login-passward-textbox {
+  top    : 200px;
+  left   : 20px;
+  height : 40px;
+  width: 280px;
+  font-size: 35px;
+}
+
+.kadai-login-button-ok{
+  top    : 190px;
+  left   : 320px;
+  height : 60px;
+  width  : 200px;
+  line-height: 40px;
+  font-size: 35px;
+  border-radius: 8px;
+  cursor: pointer;
+  background-color: #E6E6FA;
+}
+.kadai-login-button-ok:hover{
+  background-color: rgb(250, 248, 161);
+}
+
+.kadai-login-button-cancel{
+  top    : 260px;
+  left   : 330px;
+  width  : 260px;
+  line-height : 40px;
+  font-size: 35px;
+  border-radius: 8px;
+  cursor: pointer;
+  background-color: #E6E6FA;
+}
+.kadai-login-button-cancel:hover{
+  background-color: rgb(250, 248, 161);
+}
+
+.copyright{
+  top:280px;
+  left : 40px;
+  font-size:20px;
+  color:white;
+  background-color:coral;
+}
+
+.caution{
+  top:60px;
+  left   : 330px;
+  line-height : 40px;
+  font-size:30px;
+  color:white;
+  background-color:blue;
+}
+
+.other{
+  top:10px;
+  left   : 20px;
+  line-height : 40px;
+  font-size:30px;
+  color:white;
+  background-color:blue;
+}
+.a{
+  text-decoration: none;
+}

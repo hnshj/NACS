@@ -14,6 +14,8 @@ kadai.memo = (function (){
     let configMap = {
         main_html : String()
         + '<div class="memo">'
+        + '<button class="save">保存</button>'
+        + '<button class="load">保存されたメモを呼び出す</button>'
         + '<form name="memomodule">'
         + '<textarea name="memo" class="kadai-memo-memo"></textarea>'
         + '</form>'
@@ -23,7 +25,7 @@ kadai.memo = (function (){
       $container : null,
     },
     jqueryMap = {},
-    setJqueryMap, configModule, initModule, onCalendar, onSchedule;
+    setJqueryMap, configModule, initModule, onCalendar, onSchedule, onSave, onLoad;
 
      //---DOMメソッド---
   setJqueryMap = function () {
@@ -31,34 +33,34 @@ kadai.memo = (function (){
     jqueryMap = {
       $container   : $container,
       $calendar    : $container.find( '.kadai-memo-calendar' ),
-      $schedule    : $container.find( '.kadai-memo-schedule' )
+      $schedule    : $container.find( '.kadai-memo-schedule' ),
+      $save        : $container.find( '.save'),
+      $load        : $container.find( '.load'), 
     };
   }
 
 
   //---イベントハンドラ---
-  onCalendar = function () {
-    let day = new Date(), obj;
+  onSave = function () {
+    var result = window.confirm('保存すると、前回保存したものに上書きされます\n保存してもよろしいですか？');
+    
+    if( result ) {
+        var MemoData = document.memomodule.memo.value;
+        localStorage.setItem('MemoData', MemoData);
+    }
+    else {
 
-    obj = { year  : day.getFullYear(),
-      month : day.getMonth() + 1, //月だけ0始まり
-      day   : day.getDate()};
-    $.gevent.publish('changeCalendar', [obj]);
-
-    window.alert("メモを閉じるとメモの内容は、削除されます。");
-    save();
+    }
   }
 
-  onSchedule = function () {
-    let day = new Date(), obj;
-
-    obj = { year  : day.getFullYear(),
-      month : day.getMonth() + 1, //月だけ0始まり
-      day   : day.getDate()};
-    $.gevent.publish('schedule', [obj]);
-
-    window.alert("メモを閉じるとメモの内容は、削除されます。");
-    save();
+  onLoad = function () {
+    var MemoData = "";
+                    if(!localStorage.getItem('MemoData')) {
+                        MemoData = "メモは登録されていません。";
+                    } else {
+                        MemoData = localStorage.getItem('MemoData');
+                    }
+                    document.memomodule.memo.value = MemoData;
   }
 
     //---パブリックメソッド---
@@ -74,10 +76,10 @@ kadai.memo = (function (){
     $container.html( configMap.main_html );
     stateMap.$container = $container;
     setJqueryMap();
-    jqueryMap.$calendar
-     .click( onCalendar );
-    jqueryMap.$schedule
-     .click( onSchedule );
+    jqueryMap.$save
+     .click( onSave );
+    jqueryMap.$load
+     .click( onLoad );
     return true;
   }
     

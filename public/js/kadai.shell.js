@@ -80,8 +80,6 @@ kadai.shell = (function () {
   //---イベントハンドラ---
   onTitle = function () {
     $.gevent.publish('settings');
-
-    window.alert("settings");
   }
 
   onCalendar = function () {

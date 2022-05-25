@@ -1,0 +1,17 @@
+/*
+ * kadai.css
+ * ルート名前空間スタイル
+ */
+
+/* リセット開始 */
+body * {
+   margin : 0;
+   padding : 0;
+   box-sizing : border-box;
+   font-family: sans-serif;
+ }
+
+ h1, h2, h3, h4, h5, h6  { margin : 20px; }
+ p {margin: 5px;}
+ ol, ul, dl {list-style-position : inside;}
+ /* リセット終了 */

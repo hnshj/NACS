@@ -1,0 +1,25 @@
+.menu, .settings
+
+{
+  position: absolute;
+}
+.menu{
+    top : 0px;
+    left : 0px;
+    width : 40%;
+    color : black;
+    font-size : 40px;
+}
+
+.settings{
+     top : 0px;
+     left : 300px;
+     width : 200%;
+     height : 700px;
+     background-color: rgb(255,252,102);
+}
+
+.color{
+  height : 100px;
+  width  : 100px;
+}

@@ -1,0 +1,88 @@
+/*
+ * kadai.shell.css
+ * シェルスタイル
+ */
+.kadai-shell-head, .kadai-shell-head-title, .kadai-shell-head-acct,
+.kadai-shell-head-kadai, .kadai-shell-head-schedule, .kadai-shell-head-memo,
+.kadai-shell-main
+{
+  position: absolute;
+}
+
+.kadai-shell-head {
+  top    : 0;
+  left   : 0;
+  right  : 0;
+  height : 40px;
+  background: rgb(29,177,0);
+
+}
+
+.kadai-shell-head-title {
+  top    : 5px;
+  left   : 20px;
+  color  : white;
+  font-size: 20px;
+}
+
+.kadai-shell-head-kadai{
+  top    : 5px;
+  left   : 100px;
+  color  : white;
+  font-size: 20px;
+  background-color: orange;
+}
+.kadai-shell-head-kadai:hover{
+  background-color: plum;
+}
+
+.kadai-shell-head-schedule{
+  top    : 5px;
+  left   : 160px;
+  color  : white;
+  font-size: 20px;
+  background-color: orange;
+}
+.kadai-shell-head-schedule:hover{
+  background-color: plum;
+}
+
+.kadai-shell-head-memo{
+  top    : 5px;
+  left   : 240px;
+  color  : white;
+  font-size: 20px;
+  background-color: orange;
+}
+.kadai-shell-head-memo:hover{
+  background-color: plum;
+}
+
+
+.kadai-shell-head-acct {
+  top    : 4px;
+  right  : 30px;
+  width  : 120px;
+  height : 32px;
+  cursor: pointer;
+  background : rgba(1,113,0);
+  }
+
+.kadai-shell-main {
+  top    : 0;
+  left   : 0;
+  bottom : 0;
+  right  : 0;
+  background : rgb(97,216,54);
+}
+
+.kadai-shell-head-acct:hover {
+  background-color: #E63C41;
+}
+
+.kadai-shell-main {
+  top    : 40px;
+  left   : 0;
+  bottom : 0;
+  right  : 0;
+}
